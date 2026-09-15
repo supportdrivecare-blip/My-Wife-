@@ -1,0 +1,7 @@
+{
+  "name": "Meri Wife",
+  "description": "A loving companion app to celebrate your wife, track special dates, remember her favorites & sizes, jot gift wishlists, and send sweet love notes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
