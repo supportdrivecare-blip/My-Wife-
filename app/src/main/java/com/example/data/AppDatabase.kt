@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [
-        WifeProfile::class,
+        UserProfile::class,
         GiftWish::class,
         DailyCareItem::class,
         LoveNote::class,
@@ -16,20 +16,26 @@ import androidx.room.RoomDatabase
     version = 1,
     exportSchema = false
 )
-abstract class WifeDatabase : RoomDatabase() {
-    abstract fun wifeDao(): WifeDao
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun userProfileDao(): UserProfileDao
+    abstract fun giftWishDao(): GiftWishDao
+    abstract fun dailyCareItemDao(): DailyCareItemDao
+    abstract fun loveNoteDao(): LoveNoteDao
+    abstract fun dateIdeaDao(): DateIdeaDao
 
     companion object {
         @Volatile
-        private var INSTANCE: WifeDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getDatabase(context: Context): WifeDatabase {
+        fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    WifeDatabase::class.java,
-                    "meri_wife_database"
-                ).build()
+                    AppDatabase::class.java,
+                    "meri_wife_app_db"
+                )
+                .fallbackToDestructiveMigration()
+                .build()
                 INSTANCE = instance
                 instance
             }

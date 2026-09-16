@@ -3,6 +3,7 @@ package com.example.ui
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,14 +17,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Checkroom
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.LocalCafe
-import androidx.compose.material.icons.filled.Mood
-import androidx.compose.material.icons.filled.MusicNote
-import androidx.compose.material.icons.filled.Park
+import androidx.compose.material.icons.filled.LocalFlorist
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material3.Button
@@ -44,13 +42,12 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.data.WifeProfile
+import com.example.data.UserProfile
 import com.example.ui.theme.RosePrimary
-import com.example.ui.theme.RoseSecondary
 
 @Composable
 fun FavoritesScreen(
-    profile: WifeProfile,
+    profile: UserProfile,
     onEditClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -80,7 +77,7 @@ fun FavoritesScreen(
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(48.dp)
                     ) {
-                        BoxContentCenter {
+                        Box(contentAlignment = Alignment.Center) {
                             Icon(
                                 imageVector = Icons.Default.Favorite,
                                 contentDescription = null,
@@ -92,12 +89,12 @@ fun FavoritesScreen(
                     Spacer(modifier = Modifier.width(14.dp))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "${profile.name}'s Pocket Guide",
+                            text = "${profile.wifeName}'s Pocket Guide",
                             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                             color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                         Text(
-                            text = "Never second-guess her coffee order or shopping sizes again!",
+                            text = "Never second-guess her favorite drink, food, or sizes again!",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
                         )
@@ -116,65 +113,47 @@ fun FavoritesScreen(
             }
         }
 
-        // Section 1: Shopping & Sizes Cheat-Sheet
+        // Section 1: Food & Drinks
+        item {
+            PreferenceSectionCard(
+                sectionTitle = "Food & Drink Favorites",
+                sectionIcon = Icons.Default.LocalCafe,
+                items = listOf(
+                    PreferenceItemData("Favorite Beverage", profile.favoriteDrink, "Her go-to chai, coffee, or juice"),
+                    PreferenceItemData("Favorite Food / Cuisine", profile.favoriteFood, "The dish that always brings a smile")
+                ),
+                onCopy = { label, value ->
+                    clipboardManager.setText(AnnotatedString("$label: $value"))
+                    Toast.makeText(context, "$label copied!", Toast.LENGTH_SHORT).show()
+                }
+            )
+        }
+
+        // Section 2: Flowers & Aesthetics
+        item {
+            PreferenceSectionCard(
+                sectionTitle = "Flowers & Aesthetics",
+                sectionIcon = Icons.Default.LocalFlorist,
+                items = listOf(
+                    PreferenceItemData("Favorite Flowers", profile.favoriteFlower, "Perfect for surprise deliveries or romantic dates"),
+                    PreferenceItemData("Favorite Color", profile.favoriteColor.ifBlank { "Soft Pink / Pastel" }, "For gifts, clothes, and wrapping")
+                ),
+                onCopy = { label, value ->
+                    clipboardManager.setText(AnnotatedString("$label: $value"))
+                    Toast.makeText(context, "$label copied!", Toast.LENGTH_SHORT).show()
+                }
+            )
+        }
+
+        // Section 3: Shopping & Sizes Cheat-Sheet
         item {
             PreferenceSectionCard(
                 sectionTitle = "Shopping & Sizes Cheat-Sheet",
                 sectionIcon = Icons.Default.ShoppingBag,
                 items = listOf(
-                    PreferenceItemData("Ring Size", profile.ringSize, "US 6 / Indian 12"),
-                    PreferenceItemData("Shoe Size", profile.shoeSize, "UK 5 / EU 38"),
-                    PreferenceItemData("Dress / Kurti Size", profile.dressSize, "Medium / 38")
-                ),
-                onCopy = { label, value ->
-                    clipboardManager.setText(AnnotatedString("$label: $value"))
-                    Toast.makeText(context, "$label copied!", Toast.LENGTH_SHORT).show()
-                }
-            )
-        }
-
-        // Section 2: Beverages & Food
-        item {
-            PreferenceSectionCard(
-                sectionTitle = "Food, Chai & Sweet Cravings",
-                sectionIcon = Icons.Default.LocalCafe,
-                items = listOf(
-                    PreferenceItemData("Chai / Coffee Preference", profile.chaiCoffee, "How she takes her cup"),
-                    PreferenceItemData("Comfort Food", profile.comfortFood, "What makes her instantly happy"),
-                    PreferenceItemData("Favorite Dessert", profile.favoriteDessert, "Sweet tooth craving")
-                ),
-                onCopy = { label, value ->
-                    clipboardManager.setText(AnnotatedString("$label: $value"))
-                    Toast.makeText(context, "$label copied!", Toast.LENGTH_SHORT).show()
-                }
-            )
-        }
-
-        // Section 3: Aesthetics & Scents
-        item {
-            PreferenceSectionCard(
-                sectionTitle = "Flowers, Colors & Scents",
-                sectionIcon = Icons.Default.Park,
-                items = listOf(
-                    PreferenceItemData("Favorite Flowers", profile.favoriteFlowers, "Great for surprise deliveries"),
-                    PreferenceItemData("Favorite Color", profile.favoriteColor, "When picking clothes or gift wrap"),
-                    PreferenceItemData("Perfume & Scents", profile.favoritePerfume, "Fragrance notes she loves")
-                ),
-                onCopy = { label, value ->
-                    clipboardManager.setText(AnnotatedString("$label: $value"))
-                    Toast.makeText(context, "$label copied!", Toast.LENGTH_SHORT).show()
-                }
-            )
-        }
-
-        // Section 4: Mood Fixers & Entertainment
-        item {
-            PreferenceSectionCard(
-                sectionTitle = "Mood Fixer & Entertainment",
-                sectionIcon = Icons.Default.Mood,
-                items = listOf(
-                    PreferenceItemData("When She's Stressed / Upset", profile.moodFixer, "Emergency care instructions"),
-                    PreferenceItemData("Favorite Song / Movie", profile.songOrMovie, "For car rides and cozy evenings")
+                    PreferenceItemData("Ring Size", profile.ringSize.ifBlank { "Not set yet" }, "Finger ring size for jewelry gifts"),
+                    PreferenceItemData("Shoe Size", profile.shoeSize.ifBlank { "Not set yet" }, "Shoe measurement"),
+                    PreferenceItemData("Dress / Kurti Size", profile.dressSize.ifBlank { "Not set yet" }, "Outfit & clothes fit")
                 ),
                 onCopy = { label, value ->
                     clipboardManager.setText(AnnotatedString("$label: $value"))
@@ -193,7 +172,7 @@ fun FavoritesScreen(
             ) {
                 Icon(imageVector = Icons.Default.Edit, contentDescription = null, modifier = Modifier.size(18.dp))
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Edit All Preferences")
+                Text("Edit All Preferences & Dates")
             }
             Spacer(modifier = Modifier.height(24.dp))
         }
@@ -226,7 +205,7 @@ fun PreferenceSectionCard(
                     color = RosePrimary.copy(alpha = 0.12f),
                     modifier = Modifier.size(36.dp)
                 ) {
-                    BoxContentCenter {
+                    Box(contentAlignment = Alignment.Center) {
                         Icon(
                             imageVector = sectionIcon,
                             contentDescription = null,
@@ -270,7 +249,7 @@ fun PreferenceSectionCard(
                         )
                     }
 
-                    if (item.value.isNotBlank()) {
+                    if (item.value.isNotBlank() && item.value != "Not set yet") {
                         IconButton(
                             onClick = { onCopy(item.title, item.value) },
                             modifier = Modifier.size(32.dp)
@@ -289,15 +268,5 @@ fun PreferenceSectionCard(
                 }
             }
         }
-    }
-}
-
-@Composable
-fun BoxContentCenter(content: @Composable () -> Unit) {
-    androidx.compose.foundation.layout.Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        content()
     }
 }

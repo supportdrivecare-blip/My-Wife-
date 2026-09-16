@@ -3,12 +3,12 @@ package com.example.ui
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.data.AppDatabase
 import com.example.data.DailyCareItem
 import com.example.data.DateIdea
 import com.example.data.GiftWish
 import com.example.data.LoveNote
-import com.example.data.WifeDatabase
-import com.example.data.WifeProfile
+import com.example.data.UserProfile
 import com.example.data.WifeRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 data class Milestones(
@@ -25,23 +26,25 @@ data class Milestones(
     val yearsCount: Int = 0,
     val daysUntilNextAnniversary: Long = 0,
     val nextAnniversaryNumber: Int = 1,
-    val daysUntilNextBirthday: Long = 0
+    val daysUntilNextBirthday: Long = 0,
+    val anniversaryDisplay: String = "",
+    val birthdayDisplay: String = ""
 )
 
 data class WifeUiState(
-    val profile: WifeProfile = WifeProfile(),
+    val profile: UserProfile? = null,
     val milestones: Milestones = Milestones(),
     val careItems: List<DailyCareItem> = emptyList(),
     val gifts: List<GiftWish> = emptyList(),
     val loveNotes: List<LoveNote> = emptyList(),
     val dateIdeas: List<DateIdea> = emptyList(),
-    val isLoading: Boolean = false
+    val isLoading: Boolean = true
 )
 
 class WifeViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: WifeRepository
 
-    val profileFlow: StateFlow<WifeProfile?>
+    val profileFlow: StateFlow<UserProfile?>
     val giftsFlow: StateFlow<List<GiftWish>>
     val loveNotesFlow: StateFlow<List<LoveNote>>
     val dateIdeasFlow: StateFlow<List<DateIdea>>
@@ -51,8 +54,14 @@ class WifeViewModel(application: Application) : AndroidViewModel(application) {
     val uiState: StateFlow<WifeUiState> = _uiState.asStateFlow()
 
     init {
-        val database = WifeDatabase.getDatabase(application)
-        repository = WifeRepository(database.wifeDao())
+        val database = AppDatabase.getDatabase(application)
+        repository = WifeRepository(
+            profileDao = database.userProfileDao(),
+            giftDao = database.giftWishDao(),
+            careDao = database.dailyCareItemDao(),
+            loveNoteDao = database.loveNoteDao(),
+            dateIdeaDao = database.dateIdeaDao()
+        )
 
         profileFlow = repository.profile.stateIn(
             viewModelScope,
@@ -85,8 +94,7 @@ class WifeViewModel(application: Application) : AndroidViewModel(application) {
         )
 
         viewModelScope.launch {
-            repository.ensureInitialized()
-            repository.ensureTodayCareChecklist()
+            repository.ensureInitialContent()
         }
 
         // Combine flows to produce unified UI state
@@ -98,10 +106,19 @@ class WifeViewModel(application: Application) : AndroidViewModel(application) {
                 loveNotesFlow,
                 dateIdeasFlow
             ) { profile, careItems, gifts, loveNotes, dateIdeas ->
-                val currentProfile = profile ?: WifeProfile()
-                val calculatedMilestones = calculateMilestones(currentProfile)
+                val calculatedMilestones = if (profile != null) calculateMilestones(profile) else Milestones()
+
+                // Generate today's checklist if profile exists
+                if (profile != null) {
+                    repository.ensureTodayCareChecklist(
+                        drink = profile.favoriteDrink,
+                        flower = profile.favoriteFlower,
+                        food = profile.favoriteFood
+                    )
+                }
+
                 WifeUiState(
-                    profile = currentProfile,
+                    profile = profile,
                     milestones = calculatedMilestones,
                     careItems = careItems,
                     gifts = gifts,
@@ -115,37 +132,49 @@ class WifeViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun calculateMilestones(profile: WifeProfile): Milestones {
+    private fun calculateMilestones(profile: UserProfile): Milestones {
         try {
             val today = LocalDate.now()
-            val weddingDate = LocalDate.of(
-                profile.weddingYear.coerceIn(1970, 2099),
-                profile.weddingMonth.coerceIn(1, 12),
-                profile.weddingDay.coerceIn(1, 31)
-            )
+
+            // Calculate wedding anniversary
+            val weddingDate = if (profile.anniversaryDate.isNotBlank()) {
+                LocalDate.parse(profile.anniversaryDate)
+            } else {
+                today
+            }
 
             val daysTogether = if (today.isAfter(weddingDate) || today.isEqual(weddingDate)) {
                 ChronoUnit.DAYS.between(weddingDate, today)
             } else 0L
 
-            var thisYearAnniv = LocalDate.of(
-                today.year,
-                profile.weddingMonth.coerceIn(1, 12),
-                profile.weddingDay.coerceIn(1, 31)
-            )
+            var thisYearAnniv = try {
+                weddingDate.withYear(today.year)
+            } catch (e: Exception) {
+                LocalDate.of(today.year, weddingDate.monthValue, weddingDate.dayOfMonth.coerceAtMost(28))
+            }
+
             val nextAnniv = if (thisYearAnniv.isBefore(today)) {
                 thisYearAnniv.plusYears(1)
             } else {
                 thisYearAnniv
             }
             val daysUntilAnniv = ChronoUnit.DAYS.between(today, nextAnniv)
-            val nextAnnivNum = nextAnniv.year - weddingDate.year
+            val nextAnnivNum = (nextAnniv.year - weddingDate.year).coerceAtLeast(1)
+            val yearsTogether = ChronoUnit.YEARS.between(weddingDate, today).toInt().coerceAtLeast(0)
 
-            var thisYearBday = LocalDate.of(
-                today.year,
-                profile.birthMonth.coerceIn(1, 12),
-                profile.birthDay.coerceIn(1, 31)
-            )
+            // Calculate birthday
+            val bday = if (profile.birthdayDate.isNotBlank()) {
+                LocalDate.parse(profile.birthdayDate)
+            } else {
+                today
+            }
+
+            var thisYearBday = try {
+                bday.withYear(today.year)
+            } catch (e: Exception) {
+                LocalDate.of(today.year, bday.monthValue, bday.dayOfMonth.coerceAtMost(28))
+            }
+
             val nextBday = if (thisYearBday.isBefore(today)) {
                 thisYearBday.plusYears(1)
             } else {
@@ -153,29 +182,43 @@ class WifeViewModel(application: Application) : AndroidViewModel(application) {
             }
             val daysUntilBday = ChronoUnit.DAYS.between(today, nextBday)
 
-            val yearsTogether = (daysTogether / 365).toInt()
+            val annivDisplay = "${weddingDate.dayOfMonth}/${weddingDate.monthValue}"
+            val bdayDisplay = "${bday.dayOfMonth}/${bday.monthValue}"
 
             return Milestones(
                 daysTogether = daysTogether,
                 yearsCount = yearsTogether,
                 daysUntilNextAnniversary = daysUntilAnniv,
-                nextAnniversaryNumber = nextAnnivNum.coerceAtLeast(1),
-                daysUntilNextBirthday = daysUntilBday
+                nextAnniversaryNumber = nextAnnivNum,
+                daysUntilNextBirthday = daysUntilBday,
+                anniversaryDisplay = annivDisplay,
+                birthdayDisplay = bdayDisplay
             )
         } catch (e: Exception) {
-            return Milestones(
-                daysTogether = 1250,
-                yearsCount = 3,
-                daysUntilNextAnniversary = 75,
-                nextAnniversaryNumber = 4,
-                daysUntilNextBirthday = 120
+            return Milestones()
+        }
+    }
+
+    fun saveProfile(profile: UserProfile) {
+        viewModelScope.launch {
+            repository.saveProfile(profile)
+            repository.ensureTodayCareChecklist(
+                drink = profile.favoriteDrink,
+                flower = profile.favoriteFlower,
+                food = profile.favoriteFood
             )
         }
     }
 
-    fun updateProfile(newProfile: WifeProfile) {
+    fun updateProfile(profile: UserProfile) {
         viewModelScope.launch {
-            repository.saveProfile(newProfile)
+            repository.updateProfile(profile)
+        }
+    }
+
+    fun resetProfile() {
+        viewModelScope.launch {
+            repository.deleteProfile()
         }
     }
 

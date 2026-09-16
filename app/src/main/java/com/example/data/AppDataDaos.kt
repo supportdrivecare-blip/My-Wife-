@@ -9,15 +9,7 @@ import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface WifeDao {
-    // Profile
-    @Query("SELECT * FROM wife_profile WHERE id = 1 LIMIT 1")
-    fun getProfile(): Flow<WifeProfile?>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveProfile(profile: WifeProfile)
-
-    // Gift Wishes
+interface GiftWishDao {
     @Query("SELECT * FROM gift_wishes ORDER BY isFulfilled ASC, createdAt DESC")
     fun getAllGifts(): Flow<List<GiftWish>>
 
@@ -29,18 +21,25 @@ interface WifeDao {
 
     @Delete
     suspend fun deleteGift(gift: GiftWish)
+}
 
-    // Daily Care Items
+@Dao
+interface DailyCareItemDao {
     @Query("SELECT * FROM daily_care WHERE dateKey = :dateKey")
     fun getCareItemsForDate(dateKey: String): Flow<List<DailyCareItem>>
+
+    @Query("SELECT COUNT(*) FROM daily_care WHERE dateKey = :dateKey")
+    suspend fun getCountForDate(dateKey: String): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCareItems(items: List<DailyCareItem>)
 
     @Query("UPDATE daily_care SET isCompleted = :completed WHERE id = :id")
     suspend fun setCareItemCompleted(id: Int, completed: Boolean)
+}
 
-    // Love Notes
+@Dao
+interface LoveNoteDao {
     @Query("SELECT * FROM love_notes ORDER BY isFavorite DESC, createdAt DESC")
     fun getAllLoveNotes(): Flow<List<LoveNote>>
 
@@ -55,8 +54,10 @@ interface WifeDao {
 
     @Delete
     suspend fun deleteLoveNote(note: LoveNote)
+}
 
-    // Date Ideas
+@Dao
+interface DateIdeaDao {
     @Query("SELECT * FROM date_ideas ORDER BY isCompleted ASC, id ASC")
     fun getAllDateIdeas(): Flow<List<DateIdea>>
 

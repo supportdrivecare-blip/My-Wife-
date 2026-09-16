@@ -25,28 +25,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.example.data.WifeProfile
+import com.example.data.UserProfile
 
 @Composable
 fun EditProfileDialog(
-    profile: WifeProfile,
+    profile: UserProfile,
     onDismiss: () -> Unit,
-    onSave: (WifeProfile) -> Unit
+    onSave: (UserProfile) -> Unit
 ) {
-    var name by remember { mutableStateOf(profile.name) }
+    var husbandName by remember { mutableStateOf(profile.husbandName) }
+    var wifeName by remember { mutableStateOf(profile.wifeName) }
     var nickname by remember { mutableStateOf(profile.nickname) }
     var phone by remember { mutableStateOf(profile.phoneNumber) }
-    var weddingYear by remember { mutableStateOf(profile.weddingYear.toString()) }
-    var weddingMonth by remember { mutableStateOf(profile.weddingMonth.toString()) }
-    var weddingDay by remember { mutableStateOf(profile.weddingDay.toString()) }
-    var birthMonth by remember { mutableStateOf(profile.birthMonth.toString()) }
-    var birthDay by remember { mutableStateOf(profile.birthDay.toString()) }
-    var chaiCoffee by remember { mutableStateOf(profile.chaiCoffee) }
+    var favoriteDrink by remember { mutableStateOf(profile.favoriteDrink) }
+    var favoriteFlower by remember { mutableStateOf(profile.favoriteFlower) }
+    var favoriteFood by remember { mutableStateOf(profile.favoriteFood) }
     var ringSize by remember { mutableStateOf(profile.ringSize) }
     var shoeSize by remember { mutableStateOf(profile.shoeSize) }
     var dressSize by remember { mutableStateOf(profile.dressSize) }
-    var flowers by remember { mutableStateOf(profile.favoriteFlowers) }
-    var moodFixer by remember { mutableStateOf(profile.moodFixer) }
 
     val scrollState = rememberScrollState()
 
@@ -54,7 +50,7 @@ fun EditProfileDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                text = "Edit Wife's Profile",
+                text = "Edit Profile Details",
                 style = MaterialTheme.typography.titleLarge
             )
         },
@@ -66,8 +62,17 @@ fun EditProfileDialog(
                     .padding(vertical = 8.dp)
             ) {
                 OutlinedTextField(
-                    value = name,
-                    onValueChange = { name = it },
+                    value = husbandName,
+                    onValueChange = { husbandName = it },
+                    label = { Text("Husband's Name") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+
+                OutlinedTextField(
+                    value = wifeName,
+                    onValueChange = { wifeName = it },
                     label = { Text("Wife's Name") },
                     singleLine = true,
                     modifier = Modifier
@@ -100,64 +105,6 @@ fun EditProfileDialog(
                 Spacer(modifier = Modifier.height(14.dp))
 
                 Text(
-                    text = "Wedding Date (Anniversary)",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = Modifier.height(6.dp))
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    OutlinedTextField(
-                        value = weddingDay,
-                        onValueChange = { weddingDay = it.filter { c -> c.isDigit() } },
-                        label = { Text("Day") },
-                        modifier = Modifier.weight(1f),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    OutlinedTextField(
-                        value = weddingMonth,
-                        onValueChange = { weddingMonth = it.filter { c -> c.isDigit() } },
-                        label = { Text("Month (1-12)") },
-                        modifier = Modifier.weight(1.2f),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    OutlinedTextField(
-                        value = weddingYear,
-                        onValueChange = { weddingYear = it.filter { c -> c.isDigit() } },
-                        label = { Text("Year") },
-                        modifier = Modifier.weight(1.3f),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(14.dp))
-                Text(
-                    text = "Her Birthday",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = Modifier.height(6.dp))
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    OutlinedTextField(
-                        value = birthDay,
-                        onValueChange = { birthDay = it.filter { c -> c.isDigit() } },
-                        label = { Text("Day") },
-                        modifier = Modifier.weight(1f),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    OutlinedTextField(
-                        value = birthMonth,
-                        onValueChange = { birthMonth = it.filter { c -> c.isDigit() } },
-                        label = { Text("Month (1-12)") },
-                        modifier = Modifier.weight(1.2f),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(14.dp))
-                Text(
                     text = "Favorites Quick Notes",
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.primary
@@ -165,9 +112,25 @@ fun EditProfileDialog(
                 Spacer(modifier = Modifier.height(6.dp))
 
                 OutlinedTextField(
-                    value = chaiCoffee,
-                    onValueChange = { chaiCoffee = it },
-                    label = { Text("Chai / Coffee Preference") },
+                    value = favoriteDrink,
+                    onValueChange = { favoriteDrink = it },
+                    label = { Text("Favorite Drink") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = favoriteFlower,
+                    onValueChange = { favoriteFlower = it },
+                    label = { Text("Favorite Flower") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = favoriteFood,
+                    onValueChange = { favoriteFood = it },
+                    label = { Text("Favorite Food") },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -192,23 +155,7 @@ fun EditProfileDialog(
                 OutlinedTextField(
                     value = dressSize,
                     onValueChange = { dressSize = it },
-                    label = { Text("Dress / Kurti Size") },
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-
-                OutlinedTextField(
-                    value = flowers,
-                    onValueChange = { flowers = it },
-                    label = { Text("Favorite Flowers") },
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-
-                OutlinedTextField(
-                    value = moodFixer,
-                    onValueChange = { moodFixer = it },
-                    label = { Text("Best Mood Fixer") },
+                    label = { Text("Dress Size") },
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -216,28 +163,18 @@ fun EditProfileDialog(
         confirmButton = {
             Button(
                 onClick = {
-                    val wYear = weddingYear.toIntOrNull() ?: profile.weddingYear
-                    val wMonth = (weddingMonth.toIntOrNull() ?: profile.weddingMonth).coerceIn(1, 12)
-                    val wDay = (weddingDay.toIntOrNull() ?: profile.weddingDay).coerceIn(1, 31)
-                    val bMonth = (birthMonth.toIntOrNull() ?: profile.birthMonth).coerceIn(1, 12)
-                    val bDay = (birthDay.toIntOrNull() ?: profile.birthDay).coerceIn(1, 31)
-
                     onSave(
                         profile.copy(
-                            name = name.ifBlank { "Priya" },
-                            nickname = nickname.ifBlank { "Begum" },
+                            husbandName = husbandName.trim(),
+                            wifeName = wifeName.trim(),
+                            nickname = nickname.trim(),
                             phoneNumber = phone.trim(),
-                            weddingYear = wYear,
-                            weddingMonth = wMonth,
-                            weddingDay = wDay,
-                            birthMonth = bMonth,
-                            birthDay = bDay,
-                            chaiCoffee = chaiCoffee,
-                            ringSize = ringSize,
-                            shoeSize = shoeSize,
-                            dressSize = dressSize,
-                            favoriteFlowers = flowers,
-                            moodFixer = moodFixer
+                            favoriteDrink = favoriteDrink.trim(),
+                            favoriteFlower = favoriteFlower.trim(),
+                            favoriteFood = favoriteFood.trim(),
+                            ringSize = ringSize.trim(),
+                            shoeSize = shoeSize.trim(),
+                            dressSize = dressSize.trim()
                         )
                     )
                 },

@@ -64,7 +64,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.R
 import com.example.data.DailyCareItem
-import com.example.data.WifeProfile
+import com.example.data.UserProfile
 import com.example.ui.theme.RosePrimary
 import com.example.ui.theme.RoseSecondary
 import java.net.URLEncoder
@@ -79,7 +79,7 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
     val clipboardManager = LocalClipboardManager.current
-    val profile = uiState.profile
+    val profile = uiState.profile ?: return
     val milestones = uiState.milestones
     val careItems = uiState.careItems
     val completedCount = careItems.count { it.isCompleted }
@@ -155,20 +155,21 @@ fun HomeScreen(
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
-                                text = profile.name,
+                                text = profile.wifeName,
                                 style = MaterialTheme.typography.headlineMedium.copy(
                                     fontWeight = FontWeight.Bold,
                                     color = Color.White
                                 )
                             )
                             Spacer(modifier = Modifier.width(8.dp))
+                            val displayNickname = profile.nickname.ifBlank { "Meri Jaan" }
                             Surface(
                                 shape = RoundedCornerShape(12.dp),
                                 color = RosePrimary.copy(alpha = 0.85f),
                                 contentColor = Color.White
                             ) {
                                 Text(
-                                    text = profile.nickname,
+                                    text = displayNickname,
                                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
                                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Medium)
                                 )
@@ -206,7 +207,8 @@ fun HomeScreen(
                 // WhatsApp Action
                 FilledTonalButton(
                     onClick = {
-                        shareLoveMessage(context, profile.phoneNumber, "Assalam-o-Alaikum / Hi ${profile.nickname}! Just wanted to remind you that I love you so much and you make my world beautiful! ❤️")
+                        val nameGreeting = if (profile.nickname.isNotBlank()) profile.nickname else profile.wifeName
+                        shareLoveMessage(context, profile.phoneNumber, "Assalam-o-Alaikum / Hi $nameGreeting! Just wanted to remind you that I love you so much and you make my world complete! ❤️ - ${profile.husbandName}")
                     },
                     modifier = Modifier
                         .weight(1f)
@@ -222,7 +224,7 @@ fun HomeScreen(
                     Text("Send Love", maxLines = 1)
                 }
 
-                // Call Action
+                // Call Action (if phone number is set)
                 if (profile.phoneNumber.isNotBlank()) {
                     FilledTonalButton(
                         onClick = {
@@ -315,7 +317,7 @@ fun HomeScreen(
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "${milestones.nextAnniversaryNumber}th Anniversary • ${profile.weddingDay}/${profile.weddingMonth}",
+                            text = "${milestones.nextAnniversaryNumber}th Anniversary • ${milestones.anniversaryDisplay}",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
                         )
@@ -357,7 +359,7 @@ fun HomeScreen(
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "${profile.name}'s Day • ${profile.birthDay}/${profile.birthMonth}",
+                            text = "${profile.wifeName}'s Birthday • ${milestones.birthdayDisplay}",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.8f)
                         )
@@ -486,10 +488,11 @@ fun HomeScreen(
 
                                 IconButton(
                                     onClick = {
+                                        val recipientName = profile.nickname.ifBlank { profile.wifeName }
                                         val shareText = if (featuredNote.hindiText.isNotBlank()) {
-                                            "Dearest ${profile.nickname},\n\n\"${featuredNote.hindiText}\"\n\n${featuredNote.message}\n\n- Yours always ❤️"
+                                            "Dearest $recipientName,\n\n\"${featuredNote.hindiText}\"\n\n${featuredNote.message}\n\n- Yours always, ${profile.husbandName} ❤️"
                                         } else {
-                                            "Dearest ${profile.nickname},\n\n\"${featuredNote.message}\"\n\n- Yours always ❤️"
+                                            "Dearest $recipientName,\n\n\"${featuredNote.message}\"\n\n- Yours always, ${profile.husbandName} ❤️"
                                         }
                                         shareLoveMessage(context, profile.phoneNumber, shareText)
                                     },
@@ -562,9 +565,9 @@ fun HomeScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        CheatPill(title = "Chai / Coffee", value = profile.chaiCoffee, modifier = Modifier.weight(1f))
-                        CheatPill(title = "Ring Size", value = profile.ringSize, modifier = Modifier.weight(0.7f))
-                        CheatPill(title = "Shoe Size", value = profile.shoeSize, modifier = Modifier.weight(0.7f))
+                        CheatPill(title = "Drink", value = profile.favoriteDrink, modifier = Modifier.weight(1f))
+                        CheatPill(title = "Flower", value = profile.favoriteFlower, modifier = Modifier.weight(1f))
+                        CheatPill(title = "Food", value = profile.favoriteFood, modifier = Modifier.weight(1f))
                     }
                 }
             }
@@ -655,7 +658,7 @@ fun shareLoveMessage(context: Context, phoneNumber: String, message: String) {
                 type = "text/plain"
                 putExtra(Intent.EXTRA_TEXT, message)
             }
-            context.startActivity(Intent.createChooser(sendIntent, "Send to Meri Wife"))
+            context.startActivity(Intent.createChooser(sendIntent, "Send to Wife"))
         }
     } catch (e: Exception) {
         val sendIntent = Intent(Intent.ACTION_SEND).apply {

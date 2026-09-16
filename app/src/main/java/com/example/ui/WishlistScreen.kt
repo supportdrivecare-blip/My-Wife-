@@ -132,7 +132,10 @@ fun WishlistScreen(
                             color = MaterialTheme.colorScheme.primaryContainer,
                             modifier = Modifier.size(64.dp)
                         ) {
-                            BoxContentCenter {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
                                 Icon(
                                     imageVector = Icons.Default.CardGiftcard,
                                     contentDescription = null,
