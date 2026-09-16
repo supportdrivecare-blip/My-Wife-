@@ -89,12 +89,12 @@ fun FavoritesScreen(
                     Spacer(modifier = Modifier.width(14.dp))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "${profile.wifeName}'s Pocket Guide",
+                            text = "${profile.wifeName} Ki Pasand Aur Rehnumai",
                             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                             color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                         Text(
-                            text = "Never second-guess her favorite drink, food, or sizes again!",
+                            text = "Biwi ka pasandeeda mashroob, khana aur naap hamesha yaad rakhein!",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
                         )
@@ -105,7 +105,7 @@ fun FavoritesScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Edit,
-                            contentDescription = "Edit All",
+                            contentDescription = "Tabdeel Karein",
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
@@ -116,15 +116,15 @@ fun FavoritesScreen(
         // Section 1: Food & Drinks
         item {
             PreferenceSectionCard(
-                sectionTitle = "Food & Drink Favorites",
+                sectionTitle = "Khane Peene Ki Pasand",
                 sectionIcon = Icons.Default.LocalCafe,
                 items = listOf(
-                    PreferenceItemData("Favorite Beverage", profile.favoriteDrink, "Her go-to chai, coffee, or juice"),
-                    PreferenceItemData("Favorite Food / Cuisine", profile.favoriteFood, "The dish that always brings a smile")
+                    PreferenceItemData("Pasandeeda Mashroob", profile.favoriteDrink, "Unki pasand ki chai, coffee ya juice"),
+                    PreferenceItemData("Pasandeeda Khana", profile.favoriteFood, "Woh khana jis se unka chehra khil uthe")
                 ),
                 onCopy = { label, value ->
                     clipboardManager.setText(AnnotatedString("$label: $value"))
-                    Toast.makeText(context, "$label copied!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "$label copy ho gaya!", Toast.LENGTH_SHORT).show()
                 }
             )
         }
@@ -132,15 +132,15 @@ fun FavoritesScreen(
         // Section 2: Flowers & Aesthetics
         item {
             PreferenceSectionCard(
-                sectionTitle = "Flowers & Aesthetics",
+                sectionTitle = "Phool Aur Pasand",
                 sectionIcon = Icons.Default.LocalFlorist,
                 items = listOf(
-                    PreferenceItemData("Favorite Flowers", profile.favoriteFlower, "Perfect for surprise deliveries or romantic dates"),
-                    PreferenceItemData("Favorite Color", profile.favoriteColor.ifBlank { "Soft Pink / Pastel" }, "For gifts, clothes, and wrapping")
+                    PreferenceItemData("Pasandeeda Phool", profile.favoriteFlower, "Surprise tohfe ya dates ke liye behtareen"),
+                    PreferenceItemData("Pasandeeda Rang", profile.favoriteColor.ifBlank { "Gulabi / Halka Rang" }, "Tohfon aur kapron ke intikhab ke liye")
                 ),
                 onCopy = { label, value ->
                     clipboardManager.setText(AnnotatedString("$label: $value"))
-                    Toast.makeText(context, "$label copied!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "$label copy ho gaya!", Toast.LENGTH_SHORT).show()
                 }
             )
         }
@@ -148,16 +148,16 @@ fun FavoritesScreen(
         // Section 3: Shopping & Sizes Cheat-Sheet
         item {
             PreferenceSectionCard(
-                sectionTitle = "Shopping & Sizes Cheat-Sheet",
+                sectionTitle = "Khareedari Aur Naap Ki Maloomat",
                 sectionIcon = Icons.Default.ShoppingBag,
                 items = listOf(
-                    PreferenceItemData("Ring Size", profile.ringSize.ifBlank { "Not set yet" }, "Finger ring size for jewelry gifts"),
-                    PreferenceItemData("Shoe Size", profile.shoeSize.ifBlank { "Not set yet" }, "Shoe measurement"),
-                    PreferenceItemData("Dress / Kurti Size", profile.dressSize.ifBlank { "Not set yet" }, "Outfit & clothes fit")
+                    PreferenceItemData("Ungli Ka Naap (Ring Size)", profile.ringSize.ifBlank { "Abhi darj nahi" }, "Zewaraat aur angoothi ke liye"),
+                    PreferenceItemData("Jootay Ka Naap (Shoe Size)", profile.shoeSize.ifBlank { "Abhi darj nahi" }, "Jootay ka naap"),
+                    PreferenceItemData("Kapron Ka Naap (Dress Size)", profile.dressSize.ifBlank { "Abhi darj nahi" }, "Suit aur kapron ka naap")
                 ),
                 onCopy = { label, value ->
                     clipboardManager.setText(AnnotatedString("$label: $value"))
-                    Toast.makeText(context, "$label copied!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "$label copy ho gaya!", Toast.LENGTH_SHORT).show()
                 }
             )
         }
@@ -172,7 +172,7 @@ fun FavoritesScreen(
             ) {
                 Icon(imageVector = Icons.Default.Edit, contentDescription = null, modifier = Modifier.size(18.dp))
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Edit All Preferences & Dates")
+                Text("Tamam Maloomat Tabdeel Karein")
             }
             Spacer(modifier = Modifier.height(24.dp))
         }
@@ -243,20 +243,20 @@ fun PreferenceSectionCard(
                         )
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
-                            text = item.value.ifBlank { "Tap Edit to set" },
+                            text = item.value.ifBlank { "Darj karne ke liye Edit dabayein" },
                             style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
                             color = MaterialTheme.colorScheme.onSurface
                         )
                     }
 
-                    if (item.value.isNotBlank() && item.value != "Not set yet") {
+                    if (item.value.isNotBlank() && item.value != "Abhi darj nahi") {
                         IconButton(
                             onClick = { onCopy(item.title, item.value) },
                             modifier = Modifier.size(32.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.ContentCopy,
-                                contentDescription = "Copy ${item.title}",
+                                contentDescription = "${item.title} copy karein",
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.size(16.dp)
                             )

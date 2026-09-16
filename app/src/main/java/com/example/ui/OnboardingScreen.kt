@@ -98,9 +98,9 @@ fun OnboardingScreen(
 
     val displayFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
 
-    val popularDrinks = listOf("Masala Chai", "Adrak Chai", "Cappuccino", "Cold Coffee", "Fresh Juice", "Green Tea")
-    val popularFlowers = listOf("Red Roses", "Jasmine / Mogra", "White Lilies", "Tulips", "Orchids")
-    val popularFoods = listOf("Biryani", "Pizza", "Butter Chicken & Naan", "Pasta", "Pani Puri / Chaat", "Karahi")
+    val popularDrinks = listOf("Masala Chai", "Adrak Chai", "Cappuccino", "Cold Coffee", "Taza Juice", "Green Tea")
+    val popularFlowers = listOf("Surkh Gulab", "Motia / Jasmine", "Lili Phool", "Tulip", "Surajmukhi")
+    val popularFoods = listOf("Biryani", "Pizza", "Karahi & Naan", "Pasta", "Gol Gappay / Chaat")
 
     Column(
         modifier = modifier
@@ -128,7 +128,7 @@ fun OnboardingScreen(
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.img_hero_couple),
-                    contentDescription = "Welcome Couple",
+                    contentDescription = "Khush Aamdeed",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )
@@ -163,7 +163,7 @@ fun OnboardingScreen(
                         )
                     }
                     Text(
-                        text = "Har pyare husband ki companion app ❤️",
+                        text = "Har ache shohar ki sachi saathi ❤️",
                         style = MaterialTheme.typography.bodyMedium.copy(
                             color = Color.White.copy(alpha = 0.9f)
                         )
@@ -208,7 +208,7 @@ fun OnboardingScreen(
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                     Text(
-                        text = "Apni biwi ki zaroori tareekhein aur pasandeeda cheezein darj karein taake app aapke liye customize ho sake.",
+                        text = "Apni biwi ki zaroori tareekhein aur pasandeeda cheezein darj karein taake app mukammal tayyar ho sake.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.85f)
                     )
@@ -228,7 +228,7 @@ fun OnboardingScreen(
             Column(modifier = Modifier.padding(16.dp)) {
 
                 Text(
-                    text = "1. Bunyadi Maloomat (Basic Info)",
+                    text = "1. Bunyadi Maloomat",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -238,8 +238,8 @@ fun OnboardingScreen(
                 OutlinedTextField(
                     value = husbandName,
                     onValueChange = { husbandName = it },
-                    label = { Text("Aapka Naam (Husband's Name) *") },
-                    placeholder = { Text("e.g. Ali / Farhan") },
+                    label = { Text("Aapka Naam (Shohar) *") },
+                    placeholder = { Text("Misaal: Ali / Farhan") },
                     leadingIcon = {
                         Icon(Icons.Default.Person, contentDescription = null, tint = RosePrimary)
                     },
@@ -256,8 +256,8 @@ fun OnboardingScreen(
                 OutlinedTextField(
                     value = wifeName,
                     onValueChange = { wifeName = it },
-                    label = { Text("Biwi Ka Naam (Wife's Name) *") },
-                    placeholder = { Text("e.g. Ayesha / Sara") },
+                    label = { Text("Biwi Ka Naam *") },
+                    placeholder = { Text("Misaal: Ayesha / Sara") },
                     leadingIcon = {
                         Icon(Icons.Default.Favorite, contentDescription = null, tint = RosePrimary)
                     },
@@ -270,7 +270,7 @@ fun OnboardingScreen(
 
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(
-                    text = "2. Yaadgar Tareekhein (Special Dates)",
+                    text = "2. Yaadgar Tareekhein",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -302,12 +302,12 @@ fun OnboardingScreen(
                         Spacer(modifier = Modifier.width(12.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = "Shaadi / Anniversary Ki Date *",
+                                text = "Shaadi Ki Saalgirah (Anniversary) *",
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Text(
-                                text = anniversaryDate?.format(displayFormatter) ?: "Date chunein (Tap to pick)",
+                                text = anniversaryDate?.format(displayFormatter) ?: "Tareekh chunein",
                                 style = MaterialTheme.typography.bodyLarge.copy(
                                     fontWeight = if (anniversaryDate != null) FontWeight.SemiBold else FontWeight.Normal,
                                     color = if (anniversaryDate != null) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.outline
@@ -345,12 +345,12 @@ fun OnboardingScreen(
                         Spacer(modifier = Modifier.width(12.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = "Biwi Ki Birthday Ki Date *",
+                                text = "Biwi Ki Saalgirah (Birthday) *",
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Text(
-                                text = birthdayDate?.format(displayFormatter) ?: "Date chunein (Tap to pick)",
+                                text = birthdayDate?.format(displayFormatter) ?: "Tareekh chunein",
                                 style = MaterialTheme.typography.bodyLarge.copy(
                                     fontWeight = if (birthdayDate != null) FontWeight.SemiBold else FontWeight.Normal,
                                     color = if (birthdayDate != null) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.outline
@@ -362,7 +362,7 @@ fun OnboardingScreen(
 
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(
-                    text = "3. Uski Pasand (Her Favorites)",
+                    text = "3. Biwi Ki Pasand",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -373,7 +373,7 @@ fun OnboardingScreen(
                     value = favoriteDrink,
                     onValueChange = { favoriteDrink = it },
                     label = { Text("Biwi Ka Pasandeeda Mashroob *") },
-                    placeholder = { Text("e.g. Masala Chai, Cold Coffee") },
+                    placeholder = { Text("Misaal: Masala Chai, Cold Coffee") },
                     leadingIcon = {
                         Icon(Icons.Default.LocalCafe, contentDescription = null, tint = RosePrimary)
                     },
@@ -406,7 +406,7 @@ fun OnboardingScreen(
                     value = favoriteFlower,
                     onValueChange = { favoriteFlower = it },
                     label = { Text("Biwi Ka Pasandeeda Phool *") },
-                    placeholder = { Text("e.g. Red Roses, Jasmine/Mogra") },
+                    placeholder = { Text("Misaal: Surkh Gulab, Motia") },
                     leadingIcon = {
                         Icon(Icons.Default.LocalFlorist, contentDescription = null, tint = RosePrimary)
                     },
@@ -439,7 +439,7 @@ fun OnboardingScreen(
                     value = favoriteFood,
                     onValueChange = { favoriteFood = it },
                     label = { Text("Biwi Ka Pasandeeda Khana *") },
-                    placeholder = { Text("e.g. Biryani, Pizza, Pasta") },
+                    placeholder = { Text("Misaal: Biryani, Pizza, Karahi") },
                     leadingIcon = {
                         Icon(Icons.Default.Restaurant, contentDescription = null, tint = RosePrimary)
                     },
@@ -481,11 +481,11 @@ fun OnboardingScreen(
                     return@Button
                 }
                 if (anniversaryDate == null) {
-                    Toast.makeText(context, "Shaadi ki date select karein", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Shaadi ki tareekh muntakhib karein", Toast.LENGTH_SHORT).show()
                     return@Button
                 }
                 if (birthdayDate == null) {
-                    Toast.makeText(context, "Birthday date select karein", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Saalgirah ki tareekh muntakhib karein", Toast.LENGTH_SHORT).show()
                     return@Button
                 }
                 if (favoriteDrink.isBlank()) {
@@ -513,7 +513,7 @@ fun OnboardingScreen(
                     nickname = "Jaanu / Meri Begum"
                 )
                 onSaveProfile(profile)
-                Toast.makeText(context, "Welcome! Profile kamiyabi se save ho gayi ❤️", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Khush Aamdeed! Profile kamiyabi se mehfooz ho gayi ❤️", Toast.LENGTH_SHORT).show()
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -525,7 +525,7 @@ fun OnboardingScreen(
             Icon(Icons.Default.Check, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "Save Aur App Shuru Karein ❤️",
+                text = "Mehfooz Karein Aur Shuru Karein ❤️",
                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
             )
         }
@@ -553,12 +553,12 @@ fun OnboardingScreen(
                         showAnniversaryPicker = false
                     }
                 ) {
-                    Text("Select", fontWeight = FontWeight.Bold)
+                    Text("Chunein", fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showAnniversaryPicker = false }) {
-                    Text("Cancel")
+                    Text("Mansookh Karein")
                 }
             }
         ) {
@@ -586,12 +586,12 @@ fun OnboardingScreen(
                         showBirthdayPicker = false
                     }
                 ) {
-                    Text("Select", fontWeight = FontWeight.Bold)
+                    Text("Chunein", fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showBirthdayPicker = false }) {
-                    Text("Cancel")
+                    Text("Mansookh Karein")
                 }
             }
         ) {

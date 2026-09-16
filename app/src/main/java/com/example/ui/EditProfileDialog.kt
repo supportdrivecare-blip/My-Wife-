@@ -50,7 +50,7 @@ fun EditProfileDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                text = "Edit Profile Details",
+                text = "Maloomat Tabdeel Karein",
                 style = MaterialTheme.typography.titleLarge
             )
         },
@@ -64,7 +64,7 @@ fun EditProfileDialog(
                 OutlinedTextField(
                     value = husbandName,
                     onValueChange = { husbandName = it },
-                    label = { Text("Husband's Name") },
+                    label = { Text("Aapka Naam (Husband)") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -73,7 +73,7 @@ fun EditProfileDialog(
                 OutlinedTextField(
                     value = wifeName,
                     onValueChange = { wifeName = it },
-                    label = { Text("Wife's Name") },
+                    label = { Text("Biwi Ka Naam") },
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -84,7 +84,7 @@ fun EditProfileDialog(
                 OutlinedTextField(
                     value = nickname,
                     onValueChange = { nickname = it },
-                    label = { Text("Sweet Nickname (Begum, Jaanu, Rani)") },
+                    label = { Text("Pyara Naam (Misaal: Begum, Jaanu, Rani)") },
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -95,7 +95,7 @@ fun EditProfileDialog(
                 OutlinedTextField(
                     value = phone,
                     onValueChange = { phone = it },
-                    label = { Text("Phone / WhatsApp (Optional)") },
+                    label = { Text("Phone / WhatsApp (Ikhtiyari)") },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                     modifier = Modifier
@@ -105,7 +105,7 @@ fun EditProfileDialog(
                 Spacer(modifier = Modifier.height(14.dp))
 
                 Text(
-                    text = "Favorites Quick Notes",
+                    text = "Pasandeeda Cheezein",
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -114,7 +114,7 @@ fun EditProfileDialog(
                 OutlinedTextField(
                     value = favoriteDrink,
                     onValueChange = { favoriteDrink = it },
-                    label = { Text("Favorite Drink") },
+                    label = { Text("Pasandeeda Mashroob") },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -122,7 +122,7 @@ fun EditProfileDialog(
                 OutlinedTextField(
                     value = favoriteFlower,
                     onValueChange = { favoriteFlower = it },
-                    label = { Text("Favorite Flower") },
+                    label = { Text("Pasandeeda Phool") },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -130,7 +130,7 @@ fun EditProfileDialog(
                 OutlinedTextField(
                     value = favoriteFood,
                     onValueChange = { favoriteFood = it },
-                    label = { Text("Favorite Food") },
+                    label = { Text("Pasandeeda Khana") },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -139,14 +139,14 @@ fun EditProfileDialog(
                     OutlinedTextField(
                         value = ringSize,
                         onValueChange = { ringSize = it },
-                        label = { Text("Ring Size") },
+                        label = { Text("Ungli Ka Naap (Ring)") },
                         modifier = Modifier.weight(1f)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     OutlinedTextField(
                         value = shoeSize,
                         onValueChange = { shoeSize = it },
-                        label = { Text("Shoe Size") },
+                        label = { Text("Jootay Ka Naap (Shoe)") },
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -155,7 +155,7 @@ fun EditProfileDialog(
                 OutlinedTextField(
                     value = dressSize,
                     onValueChange = { dressSize = it },
-                    label = { Text("Dress Size") },
+                    label = { Text("Kapron Ka Naap (Dress)") },
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -180,12 +180,12 @@ fun EditProfileDialog(
                 },
                 modifier = Modifier.testTag("save_profile_button")
             ) {
-                Text("Save Details")
+                Text("Mehfooz Karein")
             }
         },
         dismissButton = {
             OutlinedButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text("Mansookh Karein")
             }
         }
     )

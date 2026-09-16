@@ -116,9 +116,9 @@ fun SettingsScreen(
 
     val displayFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
 
-    val popularDrinks = listOf("Masala Chai", "Adrak Chai", "Cappuccino", "Cold Coffee", "Fresh Juice", "Green Tea")
-    val popularFlowers = listOf("Red Roses", "Jasmine / Mogra", "White Lilies", "Tulips", "Sunflowers")
-    val popularFoods = listOf("Biryani", "Pizza", "Pasta", "Butter Chicken", "Pani Puri / Chaat")
+    val popularDrinks = listOf("Masala Chai", "Adrak Chai", "Cappuccino", "Cold Coffee", "Taza Juice", "Green Tea")
+    val popularFlowers = listOf("Surkh Gulab", "Motia / Jasmine", "Lili Phool", "Tulip", "Surajmukhi")
+    val popularFoods = listOf("Biryani", "Pizza", "Karahi", "Pasta", "Gol Gappay / Chaat")
 
     Column(
         modifier = modifier
@@ -154,7 +154,7 @@ fun SettingsScreen(
                 Spacer(modifier = Modifier.width(14.dp))
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "Profile Settings",
+                        text = "Profile Ki Settings",
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
@@ -178,7 +178,7 @@ fun SettingsScreen(
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Personal Info",
+                    text = "Zati Maloomat",
                     style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -201,7 +201,7 @@ fun SettingsScreen(
                 OutlinedTextField(
                     value = wifeName,
                     onValueChange = { wifeName = it },
-                    label = { Text("Biwi Ka Naam (Wife)") },
+                    label = { Text("Biwi Ka Naam") },
                     leadingIcon = { Icon(Icons.Default.Favorite, contentDescription = null, tint = RosePrimary) },
                     singleLine = true,
                     modifier = Modifier
@@ -215,7 +215,7 @@ fun SettingsScreen(
                 OutlinedTextField(
                     value = nickname,
                     onValueChange = { nickname = it },
-                    label = { Text("Pyara Naam (Jaanu, Meri Begum, Rani)") },
+                    label = { Text("Pyara Naam (Misaal: Jaanu, Begum, Rani)") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp)
@@ -226,7 +226,7 @@ fun SettingsScreen(
                 OutlinedTextField(
                     value = phone,
                     onValueChange = { phone = it },
-                    label = { Text("Phone / WhatsApp (Optional)") },
+                    label = { Text("Phone / WhatsApp (Ikhtiyari)") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp)
@@ -245,7 +245,7 @@ fun SettingsScreen(
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Special Dates",
+                    text = "Khaas Tareekhein",
                     style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -273,12 +273,12 @@ fun SettingsScreen(
                         Spacer(modifier = Modifier.width(12.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = "Shaadi / Anniversary Date",
+                                text = "Shaadi Ki Saalgirah (Anniversary)",
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Text(
-                                text = anniversaryDate?.format(displayFormatter) ?: "Select date",
+                                text = anniversaryDate?.format(displayFormatter) ?: "Tareekh chunein",
                                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold)
                             )
                         }
@@ -309,12 +309,12 @@ fun SettingsScreen(
                         Spacer(modifier = Modifier.width(12.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = "Biwi Ki Birthday Date",
+                                text = "Biwi Ki Saalgirah (Birthday)",
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Text(
-                                text = birthdayDate?.format(displayFormatter) ?: "Select date",
+                                text = birthdayDate?.format(displayFormatter) ?: "Tareekh chunein",
                                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold)
                             )
                         }
@@ -334,7 +334,7 @@ fun SettingsScreen(
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Biwi Ki Pasand (Her Favorites)",
+                    text = "Biwi Ki Pasand",
                     style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -412,7 +412,7 @@ fun SettingsScreen(
 
                 Spacer(modifier = Modifier.height(14.dp))
                 Text(
-                    text = "Extra Sizes & Preferences (Optional)",
+                    text = "Mazeed Naap Aur Pasand (Ikhtiyari)",
                     style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold),
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -422,7 +422,7 @@ fun SettingsScreen(
                     OutlinedTextField(
                         value = ringSize,
                         onValueChange = { ringSize = it },
-                        label = { Text("Ring Size") },
+                        label = { Text("Ungli Ka Naap (Ring)") },
                         modifier = Modifier.weight(1f),
                         singleLine = true,
                         shape = RoundedCornerShape(10.dp)
@@ -430,7 +430,7 @@ fun SettingsScreen(
                     OutlinedTextField(
                         value = shoeSize,
                         onValueChange = { shoeSize = it },
-                        label = { Text("Shoe Size") },
+                        label = { Text("Jootay Ka Naap (Shoe)") },
                         modifier = Modifier.weight(1f),
                         singleLine = true,
                         shape = RoundedCornerShape(10.dp)
@@ -443,7 +443,7 @@ fun SettingsScreen(
                     OutlinedTextField(
                         value = dressSize,
                         onValueChange = { dressSize = it },
-                        label = { Text("Dress Size") },
+                        label = { Text("Kapron Ka Naap (Dress)") },
                         modifier = Modifier.weight(1f),
                         singleLine = true,
                         shape = RoundedCornerShape(10.dp)
@@ -451,7 +451,7 @@ fun SettingsScreen(
                     OutlinedTextField(
                         value = favoriteColor,
                         onValueChange = { favoriteColor = it },
-                        label = { Text("Favorite Color") },
+                        label = { Text("Pasandeeda Rang") },
                         modifier = Modifier.weight(1f),
                         singleLine = true,
                         shape = RoundedCornerShape(10.dp)
@@ -496,7 +496,7 @@ fun SettingsScreen(
         ) {
             Icon(Icons.Default.Check, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))
-            Text("Update Profile", style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold))
+            Text("Profile Mehfooz Karein", style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold))
         }
 
         Spacer(modifier = Modifier.height(14.dp))
@@ -513,7 +513,7 @@ fun SettingsScreen(
         ) {
             Icon(Icons.Default.Delete, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))
-            Text("Reset Profile & Change User", color = MaterialTheme.colorScheme.error)
+            Text("Profile Reset Karein (Naya User)", color = MaterialTheme.colorScheme.error)
         }
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -526,7 +526,7 @@ fun SettingsScreen(
             icon = { Icon(Icons.Default.Warning, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
             title = { Text("Profile Reset Karein?") },
             text = {
-                Text("Is se aapka saved data remove ho jayega aur naye user ka onboarding dubara samne aayega.")
+                Text("Is se aapka tamam data khatam ho jayega aur naye saray se shuru hoga.")
             },
             confirmButton = {
                 Button(
@@ -542,7 +542,7 @@ fun SettingsScreen(
             },
             dismissButton = {
                 TextButton(onClick = { showResetConfirmation = false }) {
-                    Text("Cancel")
+                    Text("Mansookh Karein")
                 }
             }
         )
@@ -568,12 +568,12 @@ fun SettingsScreen(
                         showAnniversaryPicker = false
                     }
                 ) {
-                    Text("Select", fontWeight = FontWeight.Bold)
+                    Text("Chunein", fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showAnniversaryPicker = false }) {
-                    Text("Cancel")
+                    Text("Mansookh Karein")
                 }
             }
         ) {
@@ -601,12 +601,12 @@ fun SettingsScreen(
                         showBirthdayPicker = false
                     }
                 ) {
-                    Text("Select", fontWeight = FontWeight.Bold)
+                    Text("Chunein", fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showBirthdayPicker = false }) {
-                    Text("Cancel")
+                    Text("Mansookh Karein")
                 }
             }
         ) {

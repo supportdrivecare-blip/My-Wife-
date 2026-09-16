@@ -62,11 +62,11 @@ import com.example.ui.theme.RosePrimary
 
 enum class AppTab(val label: String, val icon: ImageVector, val title: String) {
     HOME("Home", Icons.Default.Favorite, "Meri Wife ❤️"),
-    FAVORITES("Preferences", Icons.Default.LocalCafe, "Her Favorites & Sizes"),
-    WISHLIST("Gifts", Icons.Default.CardGiftcard, "Gift Wishlist"),
-    NOTES("Notes", Icons.Default.FavoriteBorder, "Pyar Bhari Baatein"),
-    DATES("Dates", Icons.Default.Nightlife, "Date Planner"),
-    SETTINGS("Settings", Icons.Default.Settings, "Profile Settings")
+    FAVORITES("Pasandeeda", Icons.Default.LocalCafe, "Pasandeeda Cheezein"),
+    WISHLIST("Tohfay", Icons.Default.CardGiftcard, "Tohfay"),
+    NOTES("Paighamat", Icons.Default.FavoriteBorder, "Pyar Bhare Paighamat"),
+    DATES("Tareekhein", Icons.Default.Nightlife, "Ahem Tareekhein"),
+    SETTINGS("Settings", Icons.Default.Settings, "Settings")
 }
 
 class MainActivity : ComponentActivity() {

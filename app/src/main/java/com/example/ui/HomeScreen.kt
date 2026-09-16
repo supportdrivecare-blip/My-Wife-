@@ -142,7 +142,7 @@ fun HomeScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Edit,
-                            contentDescription = "Edit Profile",
+                            contentDescription = "Profile Ki Maloomat",
                             tint = Color.White
                         )
                     }
@@ -186,7 +186,7 @@ fun HomeScreen(
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
-                                text = "${milestones.daysTogether} Days Together • Married ${milestones.yearsCount} Years",
+                                text = "${milestones.daysTogether} Saath Guzare Din • ${milestones.yearsCount} Saal Ki Shaadi",
                                 style = MaterialTheme.typography.bodyMedium.copy(
                                     color = Color.White.copy(alpha = 0.92f),
                                     fontWeight = FontWeight.Medium
@@ -208,7 +208,7 @@ fun HomeScreen(
                 FilledTonalButton(
                     onClick = {
                         val nameGreeting = if (profile.nickname.isNotBlank()) profile.nickname else profile.wifeName
-                        shareLoveMessage(context, profile.phoneNumber, "Assalam-o-Alaikum / Hi $nameGreeting! Just wanted to remind you that I love you so much and you make my world complete! ❤️ - ${profile.husbandName}")
+                        shareLoveMessage(context, profile.phoneNumber, "Assalam-o-Alaikum $nameGreeting! Bas yeh yaad dilana tha ke mujhe aapse be-inteha pyar hai aur aap meri zindagi ka sab se khoobsurat hissa hain! ❤️ - ${profile.husbandName}")
                     },
                     modifier = Modifier
                         .weight(1f)
@@ -217,11 +217,11 @@ fun HomeScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Send,
-                        contentDescription = "Send Love",
+                        contentDescription = "Pyar Bhejein",
                         modifier = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text("Send Love", maxLines = 1)
+                    Text("Pyar Bhejein", maxLines = 1)
                 }
 
                 // Call Action (if phone number is set)
@@ -232,7 +232,7 @@ fun HomeScreen(
                             try {
                                 context.startActivity(callIntent)
                             } catch (e: Exception) {
-                                Toast.makeText(context, "Cannot open dialer", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Dialer nahi khul saka", Toast.LENGTH_SHORT).show()
                             }
                         },
                         modifier = Modifier
@@ -242,11 +242,11 @@ fun HomeScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Call,
-                            contentDescription = "Call",
+                            contentDescription = "Call Karein",
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("Call Her", maxLines = 1)
+                        Text("Call Karein", maxLines = 1)
                     }
                 }
 
@@ -260,11 +260,11 @@ fun HomeScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.LocalCafe,
-                        contentDescription = "Cheat Sheet",
+                        contentDescription = "Pasandeeda Cheezein",
                         modifier = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text("Preferences", maxLines = 1)
+                    Text("Pasandeeda", maxLines = 1)
                 }
             }
         }
@@ -272,7 +272,7 @@ fun HomeScreen(
         // Milestones Row
         item {
             Text(
-                text = "Special Milestones",
+                text = "Khaas Mauqay",
                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                 color = MaterialTheme.colorScheme.onBackground
             )
@@ -302,14 +302,14 @@ fun HomeScreen(
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
-                                text = "Anniversary",
+                                text = "Shaadi Ki Saalgirah",
                                 style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold),
                                 color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "${milestones.daysUntilNextAnniversary} Days Left",
+                            text = "${milestones.daysUntilNextAnniversary} Din Baqi",
                             style = MaterialTheme.typography.titleLarge.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.primary
@@ -317,7 +317,7 @@ fun HomeScreen(
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "${milestones.nextAnniversaryNumber}th Anniversary • ${milestones.anniversaryDisplay}",
+                            text = "${milestones.nextAnniversaryNumber}ween Saalgirah • ${milestones.anniversaryDisplay}",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
                         )
@@ -344,14 +344,14 @@ fun HomeScreen(
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
-                                text = "Her Birthday",
+                                text = "Uski Saalgirah",
                                 style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold),
                                 color = MaterialTheme.colorScheme.onTertiaryContainer
                             )
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "${milestones.daysUntilNextBirthday} Days Left",
+                            text = "${milestones.daysUntilNextBirthday} Din Baqi",
                             style = MaterialTheme.typography.titleLarge.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.tertiary
@@ -359,7 +359,7 @@ fun HomeScreen(
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "${profile.wifeName}'s Birthday • ${milestones.birthdayDisplay}",
+                            text = "${profile.wifeName} Ki Saalgirah • ${milestones.birthdayDisplay}",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.8f)
                         )
@@ -386,12 +386,12 @@ fun HomeScreen(
                     ) {
                         Column {
                             Text(
-                                text = "Today's Husband Checklist",
+                                text = "Aaj Ka Shauhar Checklist",
                                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                             Text(
-                                text = "Little gestures that keep the love alive",
+                                text = "Chhoti chhoti baatein jo pyar zinda rakhti hain",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -460,7 +460,7 @@ fun HomeScreen(
                                 )
                                 Spacer(modifier = Modifier.width(6.dp))
                                 Text(
-                                    text = "Thought for Her • ${featuredNote.title}",
+                                    text = "Khaas Paigham • ${featuredNote.title}",
                                     style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -474,13 +474,13 @@ fun HomeScreen(
                                             featuredNote.message
                                         }
                                         clipboardManager.setText(AnnotatedString(textToCopy))
-                                        Toast.makeText(context, "Copied to clipboard!", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context, "Copy ho gaya!", Toast.LENGTH_SHORT).show()
                                     },
                                     modifier = Modifier.size(36.dp)
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.ContentCopy,
-                                        contentDescription = "Copy quote",
+                                        contentDescription = "Paigham copy karein",
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                         modifier = Modifier.size(18.dp)
                                     )
@@ -490,9 +490,9 @@ fun HomeScreen(
                                     onClick = {
                                         val recipientName = profile.nickname.ifBlank { profile.wifeName }
                                         val shareText = if (featuredNote.hindiText.isNotBlank()) {
-                                            "Dearest $recipientName,\n\n\"${featuredNote.hindiText}\"\n\n${featuredNote.message}\n\n- Yours always, ${profile.husbandName} ❤️"
+                                            "Pyari $recipientName,\n\n\"${featuredNote.hindiText}\"\n\n${featuredNote.message}\n\n- Hamesha aapka, ${profile.husbandName} ❤️"
                                         } else {
-                                            "Dearest $recipientName,\n\n\"${featuredNote.message}\"\n\n- Yours always, ${profile.husbandName} ❤️"
+                                            "Pyari $recipientName,\n\n\"${featuredNote.message}\"\n\n- Hamesha aapka, ${profile.husbandName} ❤️"
                                         }
                                         shareLoveMessage(context, profile.phoneNumber, shareText)
                                     },
@@ -500,7 +500,7 @@ fun HomeScreen(
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Share,
-                                        contentDescription = "Share quote",
+                                        contentDescription = "Paigham bhejein",
                                         tint = MaterialTheme.colorScheme.primary,
                                         modifier = Modifier.size(18.dp)
                                     )
@@ -549,12 +549,12 @@ fun HomeScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Her Preferences at a Glance",
+                            text = "Pasandeeda Cheezein Ek Nazar Mein",
                             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                             color = MaterialTheme.colorScheme.onSurface
                         )
                         Text(
-                            text = "View All →",
+                            text = "Sab Dekhein →",
                             style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -565,9 +565,9 @@ fun HomeScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        CheatPill(title = "Drink", value = profile.favoriteDrink, modifier = Modifier.weight(1f))
-                        CheatPill(title = "Flower", value = profile.favoriteFlower, modifier = Modifier.weight(1f))
-                        CheatPill(title = "Food", value = profile.favoriteFood, modifier = Modifier.weight(1f))
+                        CheatPill(title = "Mashroob", value = profile.favoriteDrink, modifier = Modifier.weight(1f))
+                        CheatPill(title = "Phool", value = profile.favoriteFlower, modifier = Modifier.weight(1f))
+                        CheatPill(title = "Khana", value = profile.favoriteFood, modifier = Modifier.weight(1f))
                     }
                 }
             }
@@ -595,7 +595,7 @@ fun CareItemRow(
     ) {
         Icon(
             imageVector = if (item.isCompleted) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
-            contentDescription = if (item.isCompleted) "Completed" else "Not completed",
+            contentDescription = if (item.isCompleted) "Mukammal" else "Baqi",
             tint = if (item.isCompleted) Color(0xFF10B981) else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
             modifier = Modifier.size(22.dp)
         )
@@ -636,7 +636,7 @@ fun CheatPill(
                 maxLines = 1
             )
             Text(
-                text = value.ifBlank { "Not set" },
+                text = value.ifBlank { "Nahi likha" },
                 style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold),
                 color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 1
@@ -658,7 +658,7 @@ fun shareLoveMessage(context: Context, phoneNumber: String, message: String) {
                 type = "text/plain"
                 putExtra(Intent.EXTRA_TEXT, message)
             }
-            context.startActivity(Intent.createChooser(sendIntent, "Send to Wife"))
+            context.startActivity(Intent.createChooser(sendIntent, "Biwi Ko Bhejein"))
         }
     } catch (e: Exception) {
         val sendIntent = Intent(Intent.ACTION_SEND).apply {
@@ -666,9 +666,9 @@ fun shareLoveMessage(context: Context, phoneNumber: String, message: String) {
             putExtra(Intent.EXTRA_TEXT, message)
         }
         try {
-            context.startActivity(Intent.createChooser(sendIntent, "Send Love Note"))
+            context.startActivity(Intent.createChooser(sendIntent, "Pyar Bhara Paigham Bhejein"))
         } catch (ex: Exception) {
-            Toast.makeText(context, "No messaging app found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Koi messaging app nahi mili", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -35,14 +35,14 @@ class WifeRepository(
     }
 
     suspend fun ensureInitialContent() {
-        // Seed universal romantic love notes (without any hardcoded user names)
+        // Seed universal romantic love notes in Roman Urdu
         val initialNotes = listOf(
             LoveNote(
                 id = 1,
                 title = "Meri Zindagi Ki Roshni",
                 hindiText = "Har subah tumhari muskaan dekh kar lagta hai ke maine zindagi mein koi bahut pyara kaam kiya tha.",
-                message = "Seeing your smile each day makes me feel truly blessed. You bring warmth, grace, and light into our life together.",
-                category = "Love",
+                message = "Tum meri zindagi ka sab se pyara aur khoobsurat hissa ho. Har din tumhari muskurahat mere liye ek nayi barkat hai.",
+                category = "Mohabbat",
                 isFavorite = true,
                 isUserCreated = false
             ),
@@ -50,76 +50,76 @@ class WifeRepository(
                 id = 2,
                 title = "Sukoon Aur Pyar",
                 hindiText = "Duniya ki saari bheed ek taraf, aur shaam ko tumhare saath baith kar chai peena ek taraf.",
-                message = "The entire noisy world on one side, and sitting peacefully beside you on the other. That is true happiness.",
-                category = "Appreciation",
+                message = "Tumhare paas aate hi saari thakan door ho jaati hai. Tumhara saath mere dil ka asal sukoon hai.",
+                category = "Shukriya",
                 isFavorite = true,
                 isUserCreated = false
             ),
             LoveNote(
                 id = 3,
-                title = "Always Radiant",
-                hindiText = "Tum jab dil khol kar hasti ho, duniya ki sabse khoobsurat lagti ho.",
-                message = "You look the most enchanting when you smile and laugh freely. Always remember how deeply treasured you are.",
-                category = "Compliment",
+                title = "Khoobsurat Muskaan",
+                hindiText = "Tum jab dil khol kar hasti ho, duniya ki sab se pyari lagti ho.",
+                message = "Tumhare chehre ki khushi meri sab se badi daulat hai. Hamesha yunhi hasti muskurati raho.",
+                category = "Tareef",
                 isFavorite = false,
                 isUserCreated = false
             ),
             LoveNote(
                 id = 4,
-                title = "My Anchor & Best Friend",
-                hindiText = "Har mod par mera saath dene ke liye shukriya. Tum sirf meri biwi nahi, meri sabse achhi dost ho.",
-                message = "Thank you for standing by my side through every journey. You are not only my wife, but my dearest companion.",
-                category = "Appreciation",
+                title = "Meri Sab Se Achhi Dost",
+                hindiText = "Har mod par mera saath dene ke liye shukriya. Tum sirf meri biwi nahi, meri sab se achhi dost ho.",
+                message = "Har mushkil aur aasan waqt mein mera sahara banne ke liye bohot shukriya. Tumhare bina sab soona lagta hai.",
+                category = "Shukriya",
                 isFavorite = false,
                 isUserCreated = false
             ),
             LoveNote(
                 id = 5,
-                title = "Dil Se Maafi (Apology Note)",
-                hindiText = "Agar meri kisi baat ya bhool se tumhara dil dukha ho, toh mujhe dil se maaf kar dena. Tumhari khushi sabse ahem hai.",
-                message = "If my words or unintended mistakes ever hurt you, please forgive me from the heart. Your peace and happiness mean everything.",
-                category = "Apology",
+                title = "Dil Se Maafi",
+                hindiText = "Agar meri kisi baat ya bhool se tumhara dil dukha ho, toh mujhe dil se maaf kar dena.",
+                message = "Tumhara dil dukhana mera maqsad kabhi nahi ho sakta. Tumhari khushi mere liye sab se zyada ahem hai.",
+                category = "Maafi",
                 isFavorite = false,
                 isUserCreated = false
             )
         )
         loveNoteDao.insertInitialNotes(initialNotes)
 
-        // Seed inspiring date ideas
+        // Seed inspiring date ideas in Roman Urdu
         val initialIdeas = listOf(
             DateIdea(
                 id = 1,
-                title = "Sunset Drive & Quiet Tea",
-                description = "Pick her up unexpectedly, play relaxing songs she loves, and enjoy hot drinks at a scenic spot.",
-                locationType = "Outdoor",
+                title = "Shaam Ki Chai Aur Long Drive",
+                description = "Unhe achanak surprise le kar niklein, unki pasandeeda dhun lagayein aur kisi pur-sukoon jagah garam chai piyein.",
+                locationType = "Bahar",
                 isCompleted = false
             ),
             DateIdea(
                 id = 2,
-                title = "Candlelight Dinner at Home",
-                description = "Cook her favorite meal, dim the ambient lights, light soft candles, and enjoy quality conversation.",
-                locationType = "Home",
+                title = "Ghar Par Candlelight Dinner",
+                description = "Unka pasandeeda khana banayein ya mangwayein, battiyan maddham karein aur sukoon se baatein karein.",
+                locationType = "Ghar Par",
                 isCompleted = false
             ),
             DateIdea(
                 id = 3,
-                title = "Late Night Sweet Treat Run",
-                description = "Head out in cozy clothes after hours for dessert, ice cream, or waffles.",
-                locationType = "Outdoor",
+                title = "Late Night Ice Cream Ya Mithai",
+                description = "Raat ko aaramdeh kapron mein chupke se nikal kar unki pasandeeda ice cream ya koi meethi cheez khayein.",
+                locationType = "Bahar",
                 isCompleted = false
             ),
             DateIdea(
                 id = 4,
-                title = "Pampering & Relaxation Evening",
-                description = "Offer a soothing head massage, a relaxing playlist, and zero chores for her tonight.",
-                locationType = "Home",
+                title = "Aaram Aur Sukoon Bhari Shaam",
+                description = "Aaj unhe ghar ke kisi kaam ki fikar na hone dein, halka phulka head massage dein aur sukoon bhara mahol banayein.",
+                locationType = "Ghar Par",
                 isCompleted = false
             ),
             DateIdea(
                 id = 5,
-                title = "Charming Weekend Cafe Visit",
-                description = "Dress up nicely, take plenty of lovely photos of her, and explore a newly opened cafe.",
-                locationType = "Dining",
+                title = "Weekend Par Naye Cafe Ka Chakkar",
+                description = "Ache se taiyar hokar unki khoobsurat tasweerein banayein aur kisi pyare se cafe mein waqt guzarein.",
+                locationType = "Khana Peena",
                 isCompleted = false
             )
         )
@@ -138,90 +138,90 @@ class WifeRepository(
         val flowerName = if (flower.isNotBlank()) flower else "phool"
         val foodName = if (food.isNotBlank()) food else "pasandeeda khana"
 
-        // Rotating pool of generic husband care tips
+        // Rotating pool of husband care tips in Roman Urdu
         val tipsPool = listOf(
             DailyCareItem(
                 dateKey = todayStr,
                 taskKey = "compliment",
-                title = "Aaj apni biwi ki genuine tareef karein",
-                subtitle = "Tell her how lovely she looks or appreciate something wonderful she did",
+                title = "Aaj apni biwi ki dil se tareef karein",
+                subtitle = "Unhe batayein ke woh kitni pyari lag rahi hain aur unki qadar karein",
                 isCompleted = false
             ),
             DailyCareItem(
                 dateKey = todayStr,
                 taskKey = "checkin",
-                title = "Us se poochein 'Aaj din kaisa gaya?'",
+                title = "Unse poochein 'Aaj din kaisa gaya?'",
                 subtitle = "5 minute bina kisi phone ya distraction ke dhyan se sunein",
                 isCompleted = false
             ),
             DailyCareItem(
                 dateKey = todayStr,
                 taskKey = "beverage",
-                title = "Uska pasandeeda mashroob banayein",
-                subtitle = "Make her favorite $drinkName unasked and serve it with love",
+                title = "Unka pasandeeda mashroob banayein",
+                subtitle = "Bina kahe unke liye $drinkName banayein aur pyar se pesh karein",
                 isCompleted = false
             ),
             DailyCareItem(
                 dateKey = todayStr,
                 taskKey = "text_message",
-                title = "Bina wajah ke usay ek pyara message bhejein",
-                subtitle = "Send a sweet unprompted text telling her she is on your mind",
+                title = "Bina wajah ke unhe ek pyara message bhejein",
+                subtitle = "Din ke dauran ek chhota sa paigham bhejein ke woh aapke dil mein hain",
                 isCompleted = false
             ),
             DailyCareItem(
                 dateKey = todayStr,
                 taskKey = "quality_time",
-                title = "Uske saath 10 minute quality time guzarein",
-                subtitle = "Sit together calmly, hold hands, and talk about sweet things",
+                title = "Unke saath 10 minute quality time guzarein",
+                subtitle = "Bina kisi kaam ke sirf unke paas baithein aur meethi baatein karein",
                 isCompleted = false
             ),
             DailyCareItem(
                 dateKey = todayStr,
                 taskKey = "chore",
                 title = "Ghar ka koi ek kaam bina kahe kar lein",
-                subtitle = "Take care of dishes, fold clothes, or tidy the room quietly",
+                subtitle = "Bartan, safai ya koi bhi zaroori kaam khud aage badh kar sambhal lein",
                 isCompleted = false
             ),
             DailyCareItem(
                 dateKey = todayStr,
                 taskKey = "flower",
-                title = "Uske liye $flowerName le aaein",
-                subtitle = "Surprise her with her favorite flower or a fresh sweet blossom",
+                title = "Unke liye $flowerName le aaein",
+                subtitle = "Ghar aate waqt unki pasand ka phool ya guldasta la kar surprise dein",
                 isCompleted = false
             ),
             DailyCareItem(
                 dateKey = todayStr,
                 taskKey = "food",
                 title = "$foodName plan ya order karein",
-                subtitle = "Surprise her today with her comfort food for dinner",
+                subtitle = "Aaj raat ke khane mein unka pasandeeda khana pesh karein",
                 isCompleted = false
             ),
             DailyCareItem(
                 dateKey = todayStr,
                 taskKey = "hug",
                 title = "Ek pyara 20-second hug dein",
-                subtitle = "A long, reassuring embrace when meeting to melt stress away",
+                subtitle = "Ghar laut'te hi sukoon se gale lagayein taake din bhar ki thakan mit jaye",
                 isCompleted = false
             ),
             DailyCareItem(
                 dateKey = todayStr,
                 taskKey = "smile",
-                title = "Uske chehre par muskurahat le aaein",
-                subtitle = "Share a funny memory or joke that makes her laugh with whole heart",
+                title = "Unke chehre par muskurahat le aaein",
+                subtitle = "Koi purani hansi mazaq wali baat ya pyari yaad dohra kar unhe hasayein",
                 isCompleted = false
             ),
             DailyCareItem(
                 dateKey = todayStr,
                 taskKey = "support",
-                title = "Uski kisi hobby ya goal ki tareef karein",
-                subtitle = "Encourage her dreams and show genuine respect for her thoughts",
+                title = "Uski kisi hobby ya koshish ki tareef karein",
+                subtitle = "Unke khwabon aur shauq ki hosla afzai karein aur qadar karein",
                 isCompleted = false
             ),
             DailyCareItem(
                 dateKey = todayStr,
                 taskKey = "relax",
-                title = "Usko comfortable hone aur rest lene dein",
-                subtitle = "Offer a soothing head massage or quiet peaceful break",
+                title = "Unhe aaram karne ka pura waqt dein",
+                subtitle = "Unhe chai bana kar dein aur kahein ke aaj thodi der sukoon karein",
                 isCompleted = false
             )
         )

@@ -63,11 +63,11 @@ fun WishlistScreen(
     modifier: Modifier = Modifier
 ) {
     var showAddDialog by remember { mutableStateOf(false) }
-    var selectedFilter by remember { mutableStateOf("All") } // All, To Buy, Surprised
+    var selectedFilter by remember { mutableStateOf("Tamam") } // Tamam, Khareedna Hai, De Diya
 
     val filteredGifts = when (selectedFilter) {
-        "To Buy" -> gifts.filter { !it.isFulfilled }
-        "Surprised" -> gifts.filter { it.isFulfilled }
+        "Khareedna Hai" -> gifts.filter { !it.isFulfilled }
+        "De Diya" -> gifts.filter { it.isFulfilled }
         else -> gifts
     }
 
@@ -81,7 +81,7 @@ fun WishlistScreen(
                 shape = CircleShape,
                 modifier = Modifier.testTag("add_gift_fab")
             ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Gift Idea")
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Naya Tohfa Shamil Karein")
             }
         }
     ) { innerPadding ->
@@ -98,18 +98,18 @@ fun WishlistScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                listOf("All", "To Buy", "Surprised").forEach { filter ->
+                listOf("Tamam", "Khareedna Hai", "De Diya").forEach { filter ->
                     FilterChip(
                         selected = selectedFilter == filter,
                         onClick = { selectedFilter = filter },
                         label = {
                             Text(
-                                if (filter == "All") "All (${gifts.size})"
-                                else if (filter == "To Buy") "To Buy (${gifts.count { !it.isFulfilled }})"
-                                else "Given (${gifts.count { it.isFulfilled }})"
+                                if (filter == "Tamam") "Tamam (${gifts.size})"
+                                else if (filter == "Khareedna Hai") "Khareedna Hai (${gifts.count { !it.isFulfilled }})"
+                                else "De Diya (${gifts.count { it.isFulfilled }})"
                             )
                         },
-                        modifier = Modifier.testTag("filter_${filter.lowercase()}")
+                        modifier = Modifier.testTag("filter_${filter.lowercase().replace(" ", "_")}")
                     )
                 }
             }
@@ -146,12 +146,12 @@ fun WishlistScreen(
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = if (selectedFilter == "Surprised") "No gifts marked as given yet" else "No gift ideas saved yet",
+                            text = if (selectedFilter == "De Diya") "Abhi tak koi tohfa diya hua mark nahi kiya" else "Abhi tak koi tohfa save nahi kiya",
                             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                         )
                         Spacer(modifier = Modifier.height(6.dp))
                         Text(
-                            text = "Whenever she mentions 'Oh, I really love this!' in passing, tap + to save it secretly.",
+                            text = "Jab bhi biwi kahein 'mujhe yeh cheez bohot pasand aayi', chupke se + daba kar save kar lein.",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = androidx.compose.ui.text.style.TextAlign.Center
@@ -221,7 +221,7 @@ fun GiftItemCard(
             ) {
                 Icon(
                     imageVector = if (gift.isFulfilled) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
-                    contentDescription = if (gift.isFulfilled) "Mark not given" else "Mark surprised/given",
+                    contentDescription = if (gift.isFulfilled) "Wapas khareedne ki list mein dalein" else "De diya mark karein",
                     tint = if (gift.isFulfilled) Color(0xFF10B981) else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
                 )
             }
@@ -260,7 +260,7 @@ fun GiftItemCard(
                         }
                     }
 
-                    if (gift.occasion.isNotBlank() && gift.occasion != "Anytime") {
+                    if (gift.occasion.isNotBlank() && gift.occasion != "Anytime" && gift.occasion != "Kabhi Bhi") {
                         Surface(
                             shape = RoundedCornerShape(6.dp),
                             color = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.7f)
@@ -299,7 +299,7 @@ fun GiftItemCard(
             ) {
                 Icon(
                     imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete gift idea",
+                    contentDescription = "Tohfa delete karein",
                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
                     modifier = Modifier.size(18.dp)
                 )
@@ -315,25 +315,24 @@ fun AddGiftDialog(
 ) {
     var title by remember { mutableStateOf("") }
     var category by remember { mutableStateOf("Surprise") }
-    var occasion by remember { mutableStateOf("Anytime") }
+    var occasion by remember { mutableStateOf("Kabhi Bhi") }
     var price by remember { mutableStateOf("") }
     var notes by remember { mutableStateOf("") }
 
-    val categories = listOf("Surprise", "Jewelry", "Clothing", "Perfume", "Books", "Travel", "Tech")
-    val occasions = listOf("Anytime", "Birthday", "Anniversary", "Festival", "Special Date")
+    val categories = listOf("Surprise", "Zewaraat", "Kapray", "Khushboo", "Kitabein", "Safar")
 
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text("Add Secret Gift Idea", style = MaterialTheme.typography.titleLarge)
+            Text("Naya Tohfa Shamil Karein", style = MaterialTheme.typography.titleLarge)
         },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("What did she like / mention?") },
-                    placeholder = { Text("e.g. Silk saree, Pearl earrings") },
+                    label = { Text("Biwi ko kya pasand aaya?") },
+                    placeholder = { Text("Misaal: Jhumkay, Suit, Chocolate") },
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -341,7 +340,7 @@ fun AddGiftDialog(
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
-                Text("Category", style = MaterialTheme.typography.labelMedium)
+                Text("Qisam (Category)", style = MaterialTheme.typography.labelMedium)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
@@ -360,14 +359,14 @@ fun AddGiftDialog(
                     OutlinedTextField(
                         value = occasion,
                         onValueChange = { occasion = it },
-                        label = { Text("Occasion") },
+                        label = { Text("Mauqa (Occasion)") },
                         modifier = Modifier.weight(1f)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     OutlinedTextField(
                         value = price,
                         onValueChange = { price = it },
-                        label = { Text("Price (Approx)") },
+                        label = { Text("Qemat (Andazan)") },
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -376,7 +375,7 @@ fun AddGiftDialog(
                 OutlinedTextField(
                     value = notes,
                     onValueChange = { notes = it },
-                    label = { Text("Secret notes / links / brand") },
+                    label = { Text("Khaas note / dukan / brand") },
                     modifier = Modifier.fillMaxWidth(),
                     maxLines = 3
                 )
@@ -392,12 +391,12 @@ fun AddGiftDialog(
                 enabled = title.isNotBlank(),
                 modifier = Modifier.testTag("save_gift_button")
             ) {
-                Text("Save Wish")
+                Text("Mehfooz Karein")
             }
         },
         dismissButton = {
             OutlinedButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text("Mansookh Karein")
             }
         }
     )

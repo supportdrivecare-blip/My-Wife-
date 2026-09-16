@@ -70,10 +70,10 @@ fun LoveNotesScreen(
     val context = LocalContext.current
     val clipboardManager = LocalClipboardManager.current
     var showAddDialog by remember { mutableStateOf(false) }
-    var selectedCategory by remember { mutableStateOf("All") }
+    var selectedCategory by remember { mutableStateOf("Tamam") }
 
-    val categories = listOf("All", "Love", "Appreciation", "Compliment", "Apology")
-    val filteredNotes = if (selectedCategory == "All") notes else notes.filter { it.category.equals(selectedCategory, ignoreCase = true) }
+    val categories = listOf("Tamam", "Mohabbat", "Shukriya", "Tareef", "Maazrat")
+    val filteredNotes = if (selectedCategory == "Tamam") notes else notes.filter { it.category.equals(selectedCategory, ignoreCase = true) }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -85,7 +85,7 @@ fun LoveNotesScreen(
                 shape = CircleShape,
                 modifier = Modifier.testTag("add_note_fab")
             ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Write Love Note")
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Pyar Bhara Paigham Likhein")
             }
         }
     ) { innerPadding ->
@@ -127,13 +127,13 @@ fun LoveNotesScreen(
                         onCopy = {
                             val textToCopy = if (note.hindiText.isNotBlank()) "${note.hindiText}\n\n${note.message}" else note.message
                             clipboardManager.setText(AnnotatedString(textToCopy))
-                            Toast.makeText(context, "Copied love note!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Paigham copy ho gaya!", Toast.LENGTH_SHORT).show()
                         },
                         onShare = {
                             val shareMessage = if (note.hindiText.isNotBlank()) {
-                                "Dearest $wifeNickname,\n\n\"${note.hindiText}\"\n\n${note.message}\n\n- Yours always ❤️"
+                                "Pyari $wifeNickname,\n\n\"${note.hindiText}\"\n\n${note.message}\n\n- Hamesha Tumhara ❤️"
                             } else {
-                                "Dearest $wifeNickname,\n\n${note.message}\n\n- Yours always ❤️"
+                                "Pyari $wifeNickname,\n\n${note.message}\n\n- Hamesha Tumhara ❤️"
                             }
                             shareLoveMessage(context, wifePhone, shareMessage)
                         },
@@ -210,7 +210,7 @@ fun LoveNoteCard(
                     ) {
                         Icon(
                             imageVector = if (note.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                            contentDescription = "Favorite",
+                            contentDescription = "Pasandeeda",
                             tint = if (note.isFavorite) RosePrimary else MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.size(18.dp)
                         )
@@ -223,7 +223,7 @@ fun LoveNoteCard(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Delete,
-                                contentDescription = "Delete",
+                                contentDescription = "Khatam Karein",
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
                                 modifier = Modifier.size(18.dp)
                             )
@@ -270,7 +270,7 @@ fun LoveNoteCard(
                         modifier = Modifier.size(14.dp)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text("Copy", style = MaterialTheme.typography.labelMedium)
+                    Text("Copy Karein", style = MaterialTheme.typography.labelMedium)
                 }
 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -286,7 +286,7 @@ fun LoveNoteCard(
                         modifier = Modifier.size(14.dp)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text("Send to Her", style = MaterialTheme.typography.labelMedium)
+                    Text("Biwi Ko Bhejein", style = MaterialTheme.typography.labelMedium)
                 }
             }
         }
@@ -301,26 +301,26 @@ fun AddLoveNoteDialog(
     var title by remember { mutableStateOf("") }
     var hindiText by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
-    var category by remember { mutableStateOf("Love") }
+    var category by remember { mutableStateOf("Mohabbat") }
 
-    val categories = listOf("Love", "Appreciation", "Compliment", "Memory", "Apology")
+    val categories = listOf("Mohabbat", "Shukriya", "Tareef", "Khaas Yaad", "Maazrat")
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Write a Love Note or Memory", style = MaterialTheme.typography.titleLarge) },
+        title = { Text("Pyar Bhara Paigham Ya Yaad Likhein", style = MaterialTheme.typography.titleLarge) },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("Title / Short Subject") },
-                    placeholder = { Text("e.g. My Favorite Memory of You") },
+                    label = { Text("Unwan (Title)") },
+                    placeholder = { Text("Misaal: Hamari Pehli Mulaqat") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth().testTag("note_title_input")
                 )
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Text("Category", style = MaterialTheme.typography.labelMedium)
+                Text("Qisam (Category)", style = MaterialTheme.typography.labelMedium)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
@@ -338,8 +338,8 @@ fun AddLoveNoteDialog(
                 OutlinedTextField(
                     value = hindiText,
                     onValueChange = { hindiText = it },
-                    label = { Text("Hindi / Shayari / Quote (Optional)") },
-                    placeholder = { Text("Tum meri zindagi ki sabse khoobsurat...") },
+                    label = { Text("Shayari / Khaas Alfaz (Ikhtiyari)") },
+                    placeholder = { Text("Tum meri zindagi ki sabse khoobsurat roshni ho...") },
                     modifier = Modifier.fillMaxWidth(),
                     maxLines = 3
                 )
@@ -348,8 +348,8 @@ fun AddLoveNoteDialog(
                 OutlinedTextField(
                     value = message,
                     onValueChange = { message = it },
-                    label = { Text("Message / What you feel in your heart") },
-                    placeholder = { Text("Write your message here...") },
+                    label = { Text("Paigham / Dil Ki Baat") },
+                    placeholder = { Text("Apna paigham yahan likhein...") },
                     modifier = Modifier.fillMaxWidth(),
                     minLines = 3,
                     maxLines = 5
@@ -366,12 +366,12 @@ fun AddLoveNoteDialog(
                 enabled = title.isNotBlank() && (message.isNotBlank() || hindiText.isNotBlank()),
                 modifier = Modifier.testTag("save_note_button")
             ) {
-                Text("Save Note")
+                Text("Mehfooz Karein")
             }
         },
         dismissButton = {
             OutlinedButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text("Mansookh Karein")
             }
         }
     )

@@ -61,10 +61,10 @@ fun DatePlannerScreen(
     modifier: Modifier = Modifier
 ) {
     var showAddDialog by remember { mutableStateOf(false) }
-    var selectedLocation by remember { mutableStateOf("All") }
+    var selectedLocation by remember { mutableStateOf("Tamam") }
 
-    val locations = listOf("All", "Home", "Outdoor", "Dining")
-    val filteredIdeas = if (selectedLocation == "All") dateIdeas else dateIdeas.filter { it.locationType.equals(selectedLocation, ignoreCase = true) }
+    val locations = listOf("Tamam", "Ghar", "Bahar", "Khana")
+    val filteredIdeas = if (selectedLocation == "Tamam") dateIdeas else dateIdeas.filter { it.locationType.equals(selectedLocation, ignoreCase = true) }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -76,7 +76,7 @@ fun DatePlannerScreen(
                 shape = CircleShape,
                 modifier = Modifier.testTag("add_date_fab")
             ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Date Idea")
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Nayi Date Shamil Karein")
             }
         }
     ) { innerPadding ->
@@ -166,7 +166,7 @@ fun DateIdeaCard(
             ) {
                 Icon(
                     imageVector = if (idea.isCompleted) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
-                    contentDescription = if (idea.isCompleted) "Mark not completed" else "Mark completed",
+                    contentDescription = if (idea.isCompleted) "Baqi mark karein" else "Mukammal mark karein",
                     tint = if (idea.isCompleted) Color(0xFF10B981) else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
                 )
             }
@@ -212,7 +212,7 @@ fun DateIdeaCard(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete date idea",
+                        contentDescription = "Date idea delete karein",
                         tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
                         modifier = Modifier.size(18.dp)
                     )
@@ -229,26 +229,26 @@ fun AddDateIdeaDialog(
 ) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    var locationType by remember { mutableStateOf("Outdoor") }
+    var locationType by remember { mutableStateOf("Bahar") }
 
-    val locations = listOf("Home", "Outdoor", "Dining")
+    val locations = listOf("Ghar", "Bahar", "Khana")
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Plan a Romantic Date", style = MaterialTheme.typography.titleLarge) },
+        title = { Text("Romantic Mulaqat Ka Mansooba", style = MaterialTheme.typography.titleLarge) },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("Date Idea Title") },
-                    placeholder = { Text("e.g. Moonlight Rooftop Dinner") },
+                    label = { Text("Unwan (Title)") },
+                    placeholder = { Text("Misaal: Chandni Raat Mein Rooftop Dinner") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth().testTag("date_title_input")
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
-                Text("Setting / Style", style = MaterialTheme.typography.labelMedium)
+                Text("Kahan / Mahol", style = MaterialTheme.typography.labelMedium)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
@@ -266,8 +266,8 @@ fun AddDateIdeaDialog(
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
-                    label = { Text("Details / How to make it special") },
-                    placeholder = { Text("e.g. Surprise her after work with flowers...") },
+                    label = { Text("Tafseelat / Kaise khaas banayein") },
+                    placeholder = { Text("Misaal: Sham ko surprise phool de kar...") },
                     modifier = Modifier.fillMaxWidth(),
                     minLines = 2,
                     maxLines = 4
@@ -284,12 +284,12 @@ fun AddDateIdeaDialog(
                 enabled = title.isNotBlank(),
                 modifier = Modifier.testTag("save_date_button")
             ) {
-                Text("Add Date")
+                Text("Shamil Karein")
             }
         },
         dismissButton = {
             OutlinedButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text("Mansookh Karein")
             }
         }
     )
