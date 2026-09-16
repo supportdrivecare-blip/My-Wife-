@@ -45,8 +45,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.ads.AdManager
 import com.example.ui.DatePlannerScreen
@@ -63,10 +65,10 @@ import com.example.ui.theme.RosePrimary
 
 enum class AppTab(val label: String, val icon: ImageVector, val title: String) {
     HOME("Home", Icons.Default.Favorite, "Meri Wife ❤️"),
-    FAVORITES("Pasandeeda", Icons.Default.LocalCafe, "Pasandeeda Cheezein"),
+    FAVORITES("Pasand", Icons.Default.LocalCafe, "Pasandeeda Cheezein"),
     WISHLIST("Tohfay", Icons.Default.CardGiftcard, "Tohfay"),
-    NOTES("Paighamat", Icons.Default.FavoriteBorder, "Pyar Bhare Paighamat"),
-    DATES("Tareekhein", Icons.Default.Nightlife, "Ahem Tareekhein"),
+    NOTES("Paigham", Icons.Default.FavoriteBorder, "Pyar Bhare Paighamat"),
+    DATES("Tareekh", Icons.Default.Nightlife, "Ahem Tareekhein"),
     SETTINGS("Settings", Icons.Default.Settings, "Settings")
 }
 
@@ -171,8 +173,12 @@ class MainActivity : ComponentActivity() {
                                         label = {
                                             Text(
                                                 text = tab.label,
+                                                maxLines = 1,
+                                                softWrap = false,
+                                                overflow = TextOverflow.Ellipsis,
                                                 style = MaterialTheme.typography.labelSmall.copy(
-                                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                                                    fontSize = 10.5.sp,
+                                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium
                                                 )
                                             )
                                         },
