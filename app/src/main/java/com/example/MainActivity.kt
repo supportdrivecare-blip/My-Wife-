@@ -48,6 +48,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.ads.AdManager
 import com.example.ui.DatePlannerScreen
 import com.example.ui.EditProfileDialog
 import com.example.ui.FavoritesScreen
@@ -77,11 +78,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        // Initialize Google AdMob SDK and preload ads
+        AdManager.initialize(this)
+
         setContent {
             MyApplicationTheme {
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
                 var currentTab by remember { mutableStateOf(AppTab.HOME) }
                 var showEditDialog by remember { mutableStateOf(false) }
+
+                val changeTab: (AppTab) -> Unit = { newTab ->
+                    if (currentTab != newTab) {
+                        currentTab = newTab
+                        AdManager.onScreenChanged(this@MainActivity)
+                    }
+                }
 
                 if (uiState.isLoading) {
                     Box(
@@ -122,7 +133,7 @@ class MainActivity : ComponentActivity() {
                                 actions = {
                                     if (currentTab != AppTab.SETTINGS) {
                                         IconButton(
-                                            onClick = { currentTab = AppTab.SETTINGS },
+                                            onClick = { changeTab(AppTab.SETTINGS) },
                                             modifier = Modifier.testTag("top_bar_settings_button")
                                         ) {
                                             Icon(
@@ -150,7 +161,7 @@ class MainActivity : ComponentActivity() {
                                     val isSelected = currentTab == tab
                                     NavigationBarItem(
                                         selected = isSelected,
-                                        onClick = { currentTab = tab },
+                                        onClick = { changeTab(tab) },
                                         icon = {
                                             Icon(
                                                 imageVector = tab.icon,
@@ -185,16 +196,16 @@ class MainActivity : ComponentActivity() {
                                 when (tab) {
                                     AppTab.HOME -> HomeScreen(
                                         uiState = uiState,
-                                        onEditProfileClick = { currentTab = AppTab.SETTINGS },
+                                        onEditProfileClick = { changeTab(AppTab.SETTINGS) },
                                         onToggleCareItem = { id, completed ->
                                             viewModel.toggleCareItem(id, completed)
                                         },
-                                        onNavigateToFavorites = { currentTab = AppTab.FAVORITES }
+                                        onNavigateToFavorites = { changeTab(AppTab.FAVORITES) }
                                     )
 
                                     AppTab.FAVORITES -> FavoritesScreen(
                                         profile = profile,
-                                        onEditClick = { currentTab = AppTab.SETTINGS }
+                                        onEditClick = { changeTab(AppTab.SETTINGS) }
                                     )
 
                                     AppTab.WISHLIST -> WishlistScreen(

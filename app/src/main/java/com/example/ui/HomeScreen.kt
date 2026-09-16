@@ -63,6 +63,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.R
+import com.example.ads.BannerAdView
 import com.example.data.DailyCareItem
 import com.example.data.UserProfile
 import com.example.ui.theme.RosePrimary
@@ -89,13 +90,15 @@ fun HomeScreen(
     val featuredNote = uiState.loveNotes.firstOrNull { it.isFavorite }
         ?: uiState.loveNotes.firstOrNull()
 
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .testTag("home_screen_column")
-            .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
+    Column(modifier = modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .testTag("home_screen_column")
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
         item {
             Spacer(modifier = Modifier.height(4.dp))
             // Hero Banner with couple art
@@ -574,6 +577,15 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(24.dp))
         }
     }
+
+    // Google AdMob Banner Ad (Sticky at bottom, above bottom bar)
+    BannerAdView(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
+            .testTag("home_banner_ad")
+    )
+}
 }
 
 @Composable

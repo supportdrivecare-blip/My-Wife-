@@ -1,10 +1,13 @@
 package com.example.ui
 
+import android.app.Activity
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,9 +26,11 @@ import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
@@ -54,6 +59,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ads.AdManager
 import com.example.data.LoveNote
 import com.example.ui.theme.RosePrimary
 
@@ -109,6 +115,78 @@ fun LoveNotesScreen(
                         label = { Text(cat, style = MaterialTheme.typography.labelSmall) },
                         modifier = Modifier.testTag("filter_note_${cat.lowercase()}")
                     )
+                }
+            }
+
+            // Rewarded Ad Card: "Video Dekh Kar Naya Note Payein"
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("rewarded_love_note_card"),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.65f)
+                )
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(42.dp)
+                            .background(RosePrimary, CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.PlayCircle,
+                            contentDescription = "Video Icon",
+                            tint = Color.White,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "Video Dekh Kar Naya Note Payein",
+                            style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                        Text(
+                            text = "Short video dekhein aur ek naya pyar bhara paigham hasil karein",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(
+                        onClick = {
+                            val activity = context as? Activity
+                            if (activity != null) {
+                                AdManager.showRewardedAd(
+                                    activity = activity,
+                                    onRewardEarned = {
+                                        val bonus = generateBonusLoveNote(notes)
+                                        onAddNote(bonus.title, bonus.message, bonus.hindiText, bonus.category)
+                                        Toast.makeText(context, "Mubarak ho! Naya love note unlock ho gaya ❤️", Toast.LENGTH_LONG).show()
+                                    },
+                                    onAdNotReady = {
+                                        Toast.makeText(context, "Ad load ho raha hai, thori der baad koshish karein", Toast.LENGTH_SHORT).show()
+                                    }
+                                )
+                            } else {
+                                Toast.makeText(context, "Activity dastiyab nahi hai", Toast.LENGTH_SHORT).show()
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = RosePrimary),
+                        shape = RoundedCornerShape(10.dp),
+                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp),
+                        modifier = Modifier.testTag("watch_video_ad_button")
+                    ) {
+                        Text("Dekhein 🎬", style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold))
+                    }
                 }
             }
 
@@ -376,3 +454,62 @@ fun AddLoveNoteDialog(
         }
     )
 }
+
+data class BonusLoveNote(
+    val title: String,
+    val message: String,
+    val hindiText: String,
+    val category: String
+)
+
+private val BONUS_LOVE_NOTES = listOf(
+    BonusLoveNote(
+        title = "Har Dua Mein Tum",
+        message = "Meri har subah tumhari muskurahat se roshan ho aur har raat tumhari salamati ki dua par khatam ho. Tum meri zindagi ka sab se qeemti tohfa ho.",
+        hindiText = "تم میری زندگی کا سب سے حسین اور قیمتی تحفہ ہو۔",
+        category = "Mohabbat"
+    ),
+    BonusLoveNote(
+        title = "Dil Ka Sukoon",
+        message = "Dunya ki har pareshani dhoop ki tarah gayab ho jati hai jab tum mere paas muskurati ho. Tum mera sab se bada sukoon ho.",
+        hindiText = "جب تم مسکراتی ہو تو دنیا کی ہر فکر ختم ہو جاتی ہے۔",
+        category = "Mohabbat"
+    ),
+    BonusLoveNote(
+        title = "Hamesha Ka Saath",
+        message = "Main zindagi ke har mod par sirf tumhara hi haath thaamna chahta hoon. Tumhari hansi meri dunya ki sab se pyari aawaz hai.",
+        hindiText = "میری ہر سانس اور خوشی صرف تم سے وابستہ ہے۔",
+        category = "Mohabbat"
+    ),
+    BonusLoveNote(
+        title = "Tumhari Khasiyat",
+        message = "Tumhare jaisa pyara, sabar karne wala aur be-laus khayal rakhne wala sathi kismat walon ko hi milta hai. Tum lajawab ho.",
+        hindiText = "تمہارے جیسا خیال رکھنے والا ساتھی نصیب والوں کو ملتا ہے۔",
+        category = "Tareef"
+    ),
+    BonusLoveNote(
+        title = "Khuloos Ka Shukriya",
+        message = "Hamare ghar ko jannat banane ke liye aur har mushkil waqt mein mera hosla barhane ke liye tumhara dil se shukriya meri jaan.",
+        hindiText = "ہمارے گھر کو محبت کا گہوارہ بنانے پر تمہارا تہہ دل سے شکریہ۔",
+        category = "Shukriya"
+    ),
+    BonusLoveNote(
+        title = "Khush Naseebi",
+        message = "Khuda ka lakh shukr hai jisne mujhe tumhara shohar banaya. Tum meri zindagi ki sab se behtareen taqdeer ho.",
+        hindiText = "تم میری زندگی کی سب سے بہترین تقدیر ہو۔",
+        category = "Mohabbat"
+    )
+)
+
+private fun generateBonusLoveNote(existingNotes: List<LoveNote>): BonusLoveNote {
+    val existingTitles = existingNotes.map { it.title.lowercase().trim() }.toSet()
+    val available = BONUS_LOVE_NOTES.filter { it.title.lowercase().trim() !in existingTitles }
+    return if (available.isNotEmpty()) {
+        available.random()
+    } else {
+        // Fallback with timestamp variation
+        val base = BONUS_LOVE_NOTES.random()
+        base.copy(title = "${base.title} ✨")
+    }
+}
+
